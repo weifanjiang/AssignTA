@@ -24,7 +24,9 @@ def generate(num_candidate, num_course):
             data.candidate_preference[candidate][course] = round(random.uniform(0, 1), 1)
             data.course_preference[course][candidate] = round(random.uniform(0, 1), 1)
     for candidate in data.candidates:
-        data.qualification[candidate] = random.choice([0, 1])
+        data.qualification[candidate] = dict()
+        for course in data.courses:
+            data.qualification[candidate][course] = random.choice([0, 1])
     return data
 
 def main():
