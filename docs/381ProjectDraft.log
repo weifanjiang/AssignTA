@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.10.17)  16 NOV 2018 04:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.10.17)  16 NOV 2018 11:32
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -855,6 +855,350 @@ LaTeX Font Warning: Font shape `OMS/pplx/m/n' undefined
 (Font)              using `OMS/cmsy/m/n' instead
 (Font)              for symbol `textbullet' on input line 81.
 
-[1{c:/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map
-!pdfTeX error: pdflatex.exe (file c:/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map): fflush() failed (Invalid argument)
- ==> Fatal error occurred, no output PDF file produced!
+[1{c:/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
+
+
+]
+LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <12> not available
+(Font)              Font shape `T1/pplx/b/n' tried instead on input line 122.
+LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <10> not available
+(Font)              Font shape `T1/pplx/b/n' tried instead on input line 149.
+ [2]
+Underfull \hbox (badness 2173) in paragraph at lines 157--157
+[]\T1/pplx/b/n/14.4 Solution of the Math-e-mat-i-cal
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 181--181
+[]\T1/cmtt/m/n/10 WHILE[] (some[] woman[] w[] in[] W[] is[] still[] unmatched[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 181--181
+[][] [] [] [] \T1/cmtt/m/n/10 m[] <-[] first[] man[] on[] w's[] preference[] list[] to[]
+ []
+
+[3]
+Underfull \hbox (badness 10000) in paragraph at lines 209--209
+[][] [] [] [] \T1/cmtt/m/n/10 python[] stable_marrige.py[] --num_candidate[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 246--246
+[]\T1/cmtt/m/n/10 courses[] capacity[] and[] preference[] to[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 246--246
+[]\T1/cmtt/m/n/10 course0:[] candidate7,[] candidate1,[] candidate9,[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 246--246
+[]\T1/cmtt/m/n/10 course1:[] candidate8,[] candidate2,[] candidate3,[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--250
+[]\T1/pplx/m/n/10 (+20) The por-tion of out-put un-der the line
+ []
+
+
+Underfull \hbox (badness 3471) in paragraph at lines 247--250
+[][]\T1/cmtt/m/n/10 Final TA assignment: []\T1/pplx/m/n/10 (+20) shows the pro-duced as-
+ []
+
+
+Underfull \hbox (badness 2573) in paragraph at lines 263--263
+[]\T1/pplx/b/n/12 Group 2: 100 can-di-dates and 10
+ []
+
+[4]
+Underfull \hbox (badness 2573) in paragraph at lines 276--276
+[]\T1/pplx/b/n/12 Group 3: 500 can-di-dates and 20
+ []
+
+
+Underfull \hbox (badness 2573) in paragraph at lines 299--299
+[]\T1/pplx/b/n/12 Group 4: 800 can-di-dates and 25
+ []
+
+
+Underfull \hbox (badness 1521) in paragraph at lines 327--327
+[]\T1/pplx/b/n/12 Group 5: 1000 can-di-dates and 30
+ []
+
+[5]
+Underfull \hbox (badness 2608) in paragraph at lines 374--379
+\T1/pplx/m/n/10 (+20) and the Sta-bil-ity of Mar-riage", The Amer-i-can
+ []
+
+
+Overfull \hbox (35.84239pt too wide) in paragraph at lines 374--379
+\T1/pplx/m/n/10 (-20) http://mathworld.wolfram.com/StableMarriageProblem.html.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 374--379
+\T1/pplx/m/n/10 (+20) [4]Cs.princeton.edu, 2018. [On-line].
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 374--379
+\T1/pplx/m/n/10 (+20) https://www.cs.princeton.edu/ wayne/kleinberg-
+ []
+
+[6]
+Overfull \hbox (64.95287pt too wide) in paragraph at lines 503--503
+[]\T1/cmtt/m/n/10 def run_stable_marrige(num_candidate, num_course, output):[] 
+ []
+
+
+Overfull \hbox (82.27364pt too wide) in paragraph at lines 503--503
+[]    \T1/cmtt/m/n/10 data = data_generator.generate(num_candidate, num_course)[] 
+ []
+
+
+Overfull \hbox (91.19646pt too wide) in paragraph at lines 503--503
+[]    \T1/cmtt/m/n/10 for candidate, qualification in data.qualification.items():[] 
+ []
+
+
+Overfull \hbox (28.21184pt too wide) in paragraph at lines 503--503
+[]        \T1/cmtt/m/n/10 for course, score in qualification.items():[] 
+ []
+
+
+Overfull \hbox (61.27876pt too wide) in paragraph at lines 503--503
+[]                \T1/cmtt/m/n/10 courses = qualified.get(candidate, set())[] 
+ []
+
+
+Overfull \hbox (4.5926pt too wide) in paragraph at lines 503--503
+[]                \T1/cmtt/m/n/10 qualified[candidate] = courses[] 
+ []
+
+
+Overfull \hbox (397.19673pt too wide) in paragraph at lines 503--503
+[]            \T1/cmtt/m/n/10 courses_sorted = sorted(course_list, key = lambda x: data.candidate_preference[candidate][x], reverse = True)[] 
+ []
+
+
+Overfull \hbox (232.91185pt too wide) in paragraph at lines 503--503
+[]                \T1/cmtt/m/n/10 if course not in applied_to[candidate] and course in qualified[candidate]:[] 
+ []
+
+
+Overfull \hbox (40.28389pt too wide) in paragraph at lines 503--503
+[]                    \T1/cmtt/m/n/10 applied_to[candidate].add(course)[] 
+ []
+
+
+Overfull \hbox (36.08492pt too wide) in paragraph at lines 503--503
+[]                    \T1/cmtt/m/n/10 curr_purpose[candidate] = course[] 
+ []
+
+
+Overfull \hbox (43.958pt too wide) in paragraph at lines 503--503
+[]        \T1/cmtt/m/n/10 for candidate, course in curr_purpose.items():[] 
+ []
+
+
+Overfull \hbox (29.78645pt too wide) in paragraph at lines 503--503
+[]            \T1/cmtt/m/n/10 current_match[course].append(candidate)[] 
+ []
+
+
+Overfull \hbox (54.45543pt too wide) in paragraph at lines 503--503
+[]        \T1/cmtt/m/n/10 for course, candidates in current_match.items():[] 
+ []
+
+
+Overfull \hbox (360.4557pt too wide) in paragraph at lines 503--503
+[]            \T1/cmtt/m/n/10 new_candidates = sorted(candidates, key = lambda x: data.course_preference[course][x], reverse = True)[] 
+ []
+
+
+Overfull \hbox (106.94261pt too wide) in paragraph at lines 503--503
+[]            \T1/cmtt/m/n/10 if len(new_candidates) > data.course_capacity[course]:[] 
+ []
+
+
+Overfull \hbox (177.80031pt too wide) in paragraph at lines 503--503
+[]                \T1/cmtt/m/n/10 new_candidates = new_candidates[0:data.course_capacity[course]][] 
+ []
+
+
+Overfull \hbox (4.5926pt too wide) in paragraph at lines 503--503
+[]            \T1/cmtt/m/n/10 new_match[course] = new_candidates[] 
+ []
+
+
+Overfull \hbox (3.54286pt too wide) in paragraph at lines 503--503
+[]                \T1/cmtt/m/n/10 curr_matched_candidates.add(c)[] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [7
+
+]
+Overfull \hbox (54.45543pt too wide) in paragraph at lines 503--503
+[]            \T1/cmtt/m/n/10 if candidate not in curr_matched_candidates:[] 
+ []
+
+
+Overfull \hbox (127.93748pt too wide) in paragraph at lines 503--503
+[]            \T1/cmtt/m/n/10 if len(applied_to[candidate]) < len(qualified[candidate]):[] 
+ []
+
+
+Overfull \hbox (3.54286pt too wide) in paragraph at lines 503--503
+[]    \T1/cmtt/m/n/10 write_to_file(data, current_match, output)[] 
+ []
+
+
+Overfull \hbox (77.02492pt too wide) in paragraph at lines 503--503
+[]    \T1/cmtt/m/n/10 output_file.write("candidates preference to courses:\n")[] 
+ []
+
+
+Overfull \hbox (87.52235pt too wide) in paragraph at lines 503--503
+[]    \T1/cmtt/m/n/10 candidate_preference = pd.DataFrame(columns = column_list)[] 
+ []
+
+
+Overfull \hbox (112.19133pt too wide) in paragraph at lines 503--503
+[]    \T1/cmtt/m/n/10 for candidate, preference in data.candidate_preference.items():[] 
+ []
+
+
+Overfull \hbox (185.67339pt too wide) in paragraph at lines 503--503
+[]        \T1/cmtt/m/n/10 for course, qualification_score in data.qualification[candidate].items():[] 
+ []
+
+
+Overfull \hbox (15.09004pt too wide) in paragraph at lines 503--503
+[]                \T1/cmtt/m/n/10 new_data[course] = "Unqualified"[] 
+ []
+
+
+Overfull \hbox (229.23775pt too wide) in paragraph at lines 503--503
+[]        \T1/cmtt/m/n/10 candidate_preference = candidate_preference.append(new_data, ignore_index = True)[] 
+ []
+
+
+Overfull \hbox (145.25826pt too wide) in paragraph at lines 503--503
+[]    \T1/cmtt/m/n/10 output_file.write(candidate_preference.to_string(index=False) + "\n")[] 
+ []
+
+
+Overfull \hbox (155.75569pt too wide) in paragraph at lines 503--503
+[]    \T1/cmtt/m/n/10 output_file.write("\ncourses capacity and preference to candidates:\n")[] 
+ []
+
+
+Overfull \hbox (71.7762pt too wide) in paragraph at lines 503--503
+[]    \T1/cmtt/m/n/10 course_preference = pd.DataFrame(columns = column_list)[] 
+ []
+
+
+Overfull \hbox (80.69902pt too wide) in paragraph at lines 503--503
+[]    \T1/cmtt/m/n/10 for course, preference in data.course_preference.items():[] 
+ []
+
+
+Overfull \hbox (64.95287pt too wide) in paragraph at lines 503--503
+[]            \T1/cmtt/m/n/10 if data.qualification[candidate][course] == 0:[] 
+ []
+
+
+Overfull \hbox (30.8362pt too wide) in paragraph at lines 503--503
+[]                \T1/cmtt/m/n/10 new_data[candidate] = "Unqualified"[] 
+ []
+
+
+Overfull \hbox (72.82594pt too wide) in paragraph at lines 503--503
+[]        \T1/cmtt/m/n/10 new_data['capacity'] = data.course_capacity[course][] 
+ []
+
+
+Overfull \hbox (197.74544pt too wide) in paragraph at lines 503--503
+[]        \T1/cmtt/m/n/10 course_preference = course_preference.append(new_data, ignore_index = True)[] 
+ []
+
+
+Overfull \hbox (129.5121pt too wide) in paragraph at lines 503--503
+[]    \T1/cmtt/m/n/10 output_file.write(course_preference.to_string(index=False) + "\n")[] 
+ []
+
+
+Overfull \hbox (8.79158pt too wide) in paragraph at lines 503--503
+[]    \T1/cmtt/m/n/10 output_file.write("Final TA assignment:\n")[] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [8]
+Overfull \hbox (15.09004pt too wide) in paragraph at lines 503--503
+[]        \T1/cmtt/m/n/10 new_data['assigned candidates'] = people[] 
+ []
+
+
+Overfull \hbox (56.03004pt too wide) in paragraph at lines 503--503
+[]        \T1/cmtt/m/n/10 output_file.write(course + ": " + people + "\n")[] 
+ []
+
+
+Overfull \hbox (35.03517pt too wide) in paragraph at lines 503--503
+[]    \T1/cmtt/m/n/10 parser.add_argument('--num_candidate', type=int)[] 
+ []
+
+
+Overfull \hbox (19.28902pt too wide) in paragraph at lines 503--503
+[]    \T1/cmtt/m/n/10 parser.add_argument('--num_course', type=int)[] 
+ []
+
+
+Overfull \hbox (140.00954pt too wide) in paragraph at lines 503--503
+[]    \T1/cmtt/m/n/10 run_stable_marrige(args.num_candidate, args.num_course, args.output)[] 
+ []
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 505.
+[9
+
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 505.
+ (./381ProjectDraft.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 505.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 505.
+Package rerunfilecheck Info: File `381ProjectDraft.out' has not changed.
+(rerunfilecheck)             Checksum: 3C199753D7C4C890CCEB7A7B41DFB9AF;1034.
+
+
+LaTeX Font Warning: Size substitutions with differences
+(Font)              up to 0.43996pt have occurred.
+
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 505.
+ ) 
+Here is how much of TeX's memory you used:
+ 12070 strings out of 492990
+ 176524 string characters out of 6136333
+ 319617 words of memory out of 5000000
+ 15183 multiletter control sequences out of 15000+600000
+ 59858 words of font info for 234 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 41i,13n,38p,279b,505s stack positions out of 5000i,500n,10000p,200000b,80000s
+{c:/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{c:/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc}<c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/mathpazo/fplmr.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/mathpazo/fplmri.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sftt0900.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb><c:/texlive/2017/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb><c:/texlive/2017/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb><c:/texlive/2017/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
+Output written on 381ProjectDraft.pdf (9 pages, 168739 bytes).
+PDF statistics:
+ 182 PDF objects out of 1000 (max. 8388607)
+ 159 compressed objects within 2 object streams
+ 43 named destinations out of 1000 (max. 500000)
+ 31873 words of extra memory for PDF output out of 35830 (max. 10000000)
+
