@@ -50,7 +50,7 @@
     \begin{abstract}
 
     For this project, we are focusing on develop a method to assign teaching-assistant candidates
-    to different courses. Assignning candidates to their preferred teaching positions has bothered
+    to different courses. Assigning candidates to their preferred teaching positions has bothered
     course coordinators at UW for a long time. Our purpose is to recommend our method of teaching-assistant
     assignments to solve this problem. We used simulated data to compare different methods that 
     we would use in the project.
@@ -59,7 +59,7 @@
 
     \linespread{1.05} % Line spacing - Palatino needs more space between lines
     %------------------------------------------------
-    \section{Introduction}
+    \section{Problem Description}
     The assignment of different teaching positions is a complicated work. The word "teaching position" 
     includes teaching assistants, graders and instructors here at UW. Each type of position has its 
     unique qualifications and requirments. Some positions require teaching, while other do not. 
@@ -68,15 +68,12 @@
     but also in different courses. For instance, the instructor positions would mostly be restricted to 
     graduate students. Meanwhile, the teaching assistant positions could open to both undergraduate students and 
     graduate students.
-
-    
-    Furthermore, the UW introduction courses, such as CSE 142(Computer Programming I), are always popular 
+    \\ Furthermore, the UW introduction courses, such as CSE 142(Computer Programming I), are always popular 
     that there are over 700 students registered for around 50 sections each quarter. On the other hand, there are 
     also tiny-sized courses that designed for under 10 students. Therefore, the assignments of teaching positions 
     must satisfy the requirements for every single course each quarter such that everyone who registered for the course
     could have equal opportunity and fairly distributed teaching resources.   
-
-    Additionally, during the process of assignments, the course coordinators, who are in charge of assigning student candidates
+    \\ Additionally, during the process of assignments, the course coordinators, who are in charge of assigning student candidates
     to appropriate roles, must consider about the preference list for seperated categories submitted by the candidates. Taking
     the example of UW CSE TA application form, as the candidates apply for CSE TA positions, they needs to choose their preferences 
     ("prefer not" or"neutral" or "prefer") for 12 distinct categories
@@ -101,25 +98,62 @@
     between 0.0 and 1.0 that represents their preference to teach each courses that they are certified to TA. Besides preferences from 
     candidates side, instructors preferences should also be considered. Instructors would be asked to fill in a form of preferred students.
     %------------------------------------------------
-    Our motivation of the project is from the interview with undergraduate TAs and graduate TAs about their teaching experience in early quarters.
+    \\ Our motivation of the project is from the interview with undergraduate TAs and graduate TAs about their teaching experience in early quarters.
     They complained that many times, even though they self-report their preferences, the situation that they got assigned to a course which 
-    indicated as "less-preferred" is still common. Therefore, we would like to develop such method which put student candidates' preferences and
-    professors' preferences at maximal consideration, while not producting unpractical assignments.
-
+    indicated as "less-preferred" is still common. Therefore, we would like to recommend a method that assigns candidates of difference
+    courses, in such way that respects the following considerations:
+    \begin{itemize}
+        \item Each candidate must be assigned to at most one course
+        \item Each course must be assigned an appropriate number of candidates
+        \item Each candidate must be assigned only to the courses for which they are qualified
+        \item Both candidates' and professors' preferences will be satisfied as much as possible
+    \end{itemize}
     %------------------------------------------------
-    \section{Theoretical Background}
-    \subsection{Stable Match Algorithm}
+    \section{Simplification}
+    For the project draft, we simulated several groups of small-scale data and compare their results 
+    \begin{itemize}
+        \item 50 candidates with 5 courses
+        \item 100 candidates with 10 courses
+        \item 500 candidates with 20 courses
+        \item 800 candidates with 25 courses
+        \item 1000 candidates with 30 courses
+    \end{itemize}
+    \subsection{Input}
+    We simulated student candidates' following quantified metric:
+    \begin{itemize}
+        \item Preference to each role (grader, teaching assistant, instructor) for each course as numerical values between 0.0 and 
+        1.0 where 0.0 indicates minimal preference and 1.0 indicates maximal preference. For the project draft, we would only consider
+        teaching assistant roles at first.
+        \item Qualification to each role for each course, which could be represented as an indicating matrix, where 1 entry indicates
+        qualified for the role and 0 indicates not qualified.
+    \end{itemize}
+    We also need to have each professor’s preferences towards each candidate, which we implemented as a numerical matrix like preference
+    matrix of candidates' preference.
+    \\ As for the department’s requirements, we chose a number between $1$ and $5$ for each course that representing the required number of 
+    teaching assistants for corresponding course.     
+    %------------------------------------------------
+    \subsection{Assumption}
+    There were some assumptions we considered about in the draft phase
+    \begin{enumerate}
+        \item The quantifications of candidates who are applying for the same course were the same. In the other word, we would not take
+        account into candidates' past teaching experiences, as well as their GPA when they took that course at this time.
+        \item Student candidates do not care about any factors other than their preferences, such as payment and work time.
+        \item Candidate's time conflict with other courses they are taking is not considered.
+        \item All candidates are legally registered UW students.
+    \end{enumerate}
+    \section{Mathematical Model}
+    \section{Solution of the Mathematical Problem}
+    \subsection{Stable Marriage Algorithm}
     In the field of computer science and mathematics, stable match problem or stable marraige problem states that that given N men and N women, 
     where each person has ranked all members of the opposite sex in order of preference, marry the men and women together such that there are no 
     2 people of opposite sex who would both rather have each other than their current partners. If there are no such people, all the marriages are “stable”.
-    In 1962, D. Gale and L. S. Shapley, Brown University and the RAND Corporation, proved that, for any equal number of men and women, it is guaranteed
+    \\ In 1962, D. Gale and L. S. Shapley, Brown University and the RAND Corporation, proved that, for any equal number of men and women, it is guaranteed
     that there is a stable matching. In their paper "College Admission and the Stability of Marriage", they defined the stability as following, an assignments
     of applications to colleges will be called unstable if there are two applicants $\alpha$ and $\beta$ who are assigned to colleges A and B, respectively,
     although $\beta$ prefers A to B and A prefers $\beta$ to $\alpha$. And they considered a stable assignment to be optimal if every applicant is at least 
     as well off under it as under any other stable assignments.
-    
-    Gale-Shapley Algorithm
-    \begin{spverbatim}
+    \\ \textbf{Gale-Shapley Algorithm}
+\begin{spverbatim}
 INPUT: preference list for men and women
 INITIALIZE matching set S to an empty set
 WHILE (some woman w in W is still unmatched and hasn't proposed to every man in M)
@@ -131,30 +165,20 @@ WHILE (some woman w in W is still unmatched and hasn't proposed to every man in 
         FREE w'
     ELSE 
         w REJECT m
-
 RETURN matching S
-    \end{spverbatim}
-
-    \section{Algorithm Implementation and Development}
-    \subsection{Genreal Procedure}
-    
-    %------------------------------------------------
-
-    \section{Computational Results}
-    \subsection{Test 1}
-        
-
-    \section{Summary and Conclusions}
-    
+\end{spverbatim}
+    \section{Results}
+    \section{Improvements}
+    \section{Conclusion}
+    \section{Acknowledge}
+    \section{References}
     %----------------------------------------------------------------------------------------
     %	APPENDIX
     %----------------------------------------------------------------------------------------
-
     \mbox{~}
     \clearpage
     \begin{appendices}
     \setboolean{@twoside}{false}
     \setboolean{@twocolumn}{false}
     \end{appendices}
-
 \end{document}
