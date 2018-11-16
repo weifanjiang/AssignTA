@@ -1,0 +1,160 @@
+\documentclass[twoside,twocolumn]{article}
+    \usepackage[a4paper, left=2cm, right=2cm]{geometry} % A4 paper size and thin margins
+    \usepackage[sc]{mathpazo} % Use the Palatino font
+    \usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+    \usepackage{microtype} % Slightly tweak font spacing for aesthetics
+    \usepackage[english]{babel} % Language hyphenation and typographical rules
+    \usepackage{booktabs} % Horizontal rules in tables
+    \usepackage{enumitem} % Customized lists
+    \usepackage[table,xcdraw]{xcolor}
+    \usepackage[utf8]{inputenc} % Required for inputting international characters
+    \usepackage{parskip}
+    \usepackage{graphicx}
+    \usepackage{hyperref}
+    \usepackage{pdfpages}
+    \usepackage{amsmath}
+    \usepackage{esvect}
+    \usepackage{listings}
+    \usepackage{spverbatim}
+    \usepackage[title]{appendix}
+    \hypersetup{
+        colorlinks=true,
+        linkcolor=blue,
+        filecolor=magenta,      
+        urlcolor=cyan,
+    }
+    \urlstyle{same}
+    \setlength{\parindent}{18pt}
+    \setlist[itemize]{noitemsep} % Make itemize lists more compact
+    \makeatletter
+    \newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+    \g@addto@macro{\UrlBreaks}{\UrlOrds}
+    \makeatother
+
+    \title{\LARGE \bf
+    Optimization of Assignments for Teaching Assistants at UW
+    }
+    
+    \author{ \parbox{3 in}{\centering Chongyi Xu, Weifan Jiang \\
+             University of Washington\\
+             MATH 381 Project Draft\\
+             {\tt\small chongyix@uw.edu}}
+    }
+
+    \begin{document}
+    \maketitle
+
+    %----------------------------------------------------------------------------------------
+    %	ARTICLE CONTENTS
+    %----------------------------------------------------------------------------------------
+    \begin{abstract}
+
+    For this project, we are focusing on develop a method to assign teaching-assistant candidates
+    to different courses. Assignning candidates to their preferred teaching positions has bothered
+    course coordinators at UW for a long time. Our purpose is to recommend our method of teaching-assistant
+    assignments to solve this problem. We used simulated data to compare different methods that 
+    we would use in the project.
+        
+    \end{abstract}
+
+    \linespread{1.05} % Line spacing - Palatino needs more space between lines
+    %------------------------------------------------
+    \section{Introduction}
+    The assignment of different teaching positions is a complicated work. The word "teaching position" 
+    includes teaching assistants, graders and instructors here at UW. Each type of position has its 
+    unique qualifications and requirments. Some positions require teaching, while other do not. 
+    Most students are deemed to be certified to teach. Those whose first language is not English must 
+    pass the SPEAK test to be certified. The position qualification does not only appear in different roles 
+    but also in different courses. For instance, the instructor positions would mostly be restricted to 
+    graduate students. Meanwhile, the teaching assistant positions could open to both undergraduate students and 
+    graduate students.
+
+    
+    Furthermore, the UW introduction courses, such as CSE 142(Computer Programming I), are always popular 
+    that there are over 700 students registered for around 50 sections each quarter. On the other hand, there are 
+    also tiny-sized courses that designed for under 10 students. Therefore, the assignments of teaching positions 
+    must satisfy the requirements for every single course each quarter such that everyone who registered for the course
+    could have equal opportunity and fairly distributed teaching resources.   
+
+    Additionally, during the process of assignments, the course coordinators, who are in charge of assigning student candidates
+    to appropriate roles, must consider about the preference list for seperated categories submitted by the candidates. Taking
+    the example of UW CSE TA application form, as the candidates apply for CSE TA positions, they needs to choose their preferences 
+    ("prefer not" or"neutral" or "prefer") for 12 distinct categories
+    \begin{itemize}
+        \item AI and Robotics			
+        \item Architecture			
+        \item Computational Biology			
+        \item Databases, Information Retrieval			
+        \item Graphics, Vision, Animation			
+        \item Hardware			
+        \item Human-Computer Interaction			
+        \item Introductory (CSE100,14x, 190)			
+        \item Languages, Compilers, Software Engineering			
+        \item Systems, Networks
+        \item Theory			
+        \item Uncategorize
+    \end{itemize}
+    And following the information provided by CSE department, they initialize the preference value for each course that candidates prefer, 
+    are neutral to, or prefer not to TA to 0.8, 0.5, and 0.2, respectively. This helps "push" candidates assignment towards courses 
+    in areas they prefer and away from courses in areas they do not prefer. Without choosing preference directly, candidates could establish
+    their course preferences as well. If candidates choose to make up their own list, they would be asked to fill in a numerical number 
+    between 0.0 and 1.0 that represents their preference to teach each courses that they are certified to TA. Besides preferences from 
+    candidates side, instructors preferences should also be considered. Instructors would be asked to fill in a form of preferred students.
+    %------------------------------------------------
+    Our motivation of the project is from the interview with undergraduate TAs and graduate TAs about their teaching experience in early quarters.
+    They complained that many times, even though they self-report their preferences, the situation that they got assigned to a course which 
+    indicated as "less-preferred" is still common. Therefore, we would like to develop such method which put student candidates' preferences and
+    professors' preferences at maximal consideration, while not producting unpractical assignments.
+
+    %------------------------------------------------
+    \section{Theoretical Background}
+    \subsection{Stable Match Algorithm}
+    In the field of computer science and mathematics, stable match problem or stable marraige problem states that that given N men and N women, 
+    where each person has ranked all members of the opposite sex in order of preference, marry the men and women together such that there are no 
+    2 people of opposite sex who would both rather have each other than their current partners. If there are no such people, all the marriages are “stable”.
+    In 1962, D. Gale and L. S. Shapley, Brown University and the RAND Corporation, proved that, for any equal number of men and women, it is guaranteed
+    that there is a stable matching. In their paper "College Admission and the Stability of Marriage", they defined the stability as following, an assignments
+    of applications to colleges will be called unstable if there are two applicants $\alpha$ and $\beta$ who are assigned to colleges A and B, respectively,
+    although $\beta$ prefers A to B and A prefers $\beta$ to $\alpha$. And they considered a stable assignment to be optimal if every applicant is at least 
+    as well off under it as under any other stable assignments.
+    
+    Gale-Shapley Algorithm
+    \begin{spverbatim}
+INPUT: preference list for men and women
+INITIALIZE matching set S to an empty set
+WHILE (some woman w in W is still unmatched and hasn't proposed to every man in M)
+    m <- first man on w's preference list to whom w has not yet proposed
+    IF (m is unmatched)
+        ADD pair (m, w) to S
+    ELSE IF (m prefers w to existing pair w')
+        REPLACE (m, w') with (m, w) in S
+        FREE w'
+    ELSE 
+        w REJECT m
+
+RETURN matching S
+    \end{spverbatim}
+
+    \section{Algorithm Implementation and Development}
+    \subsection{Genreal Procedure}
+    
+    %------------------------------------------------
+
+    \section{Computational Results}
+    \subsection{Test 1}
+        
+
+    \section{Summary and Conclusions}
+    
+    %----------------------------------------------------------------------------------------
+    %	APPENDIX
+    %----------------------------------------------------------------------------------------
+
+    \mbox{~}
+    \clearpage
+    \begin{appendices}
+    \setboolean{@twoside}{false}
+    \setboolean{@twocolumn}{false}
+    \end{appendices}
+
+\end{document}
