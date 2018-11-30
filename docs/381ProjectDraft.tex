@@ -49,9 +49,9 @@
     %----------------------------------------------------------------------------------------
     \begin{abstract}
 
-    For this project, we are focusing on develop a method to assign teaching-assistant candidates
-    to different courses. Assigning candidates to their preferred teaching positions has bothered
-    course coordinators at UW for a long time. Our purpose is to recommend our method of teaching-assistant
+    \indent For this project, we are focusing on developing a method to assign teaching-assistant candidates
+    to different courses. Assigning candidates to their preferred teaching positions is important to 
+    course coordinators at UW for a long time. Our purpose is to recommend a method of teaching-assistant
     assignments to solve this problem. We used simulated data to compare different methods that 
     we would use in the project.
         
@@ -60,23 +60,23 @@
     \linespread{1.05} % Line spacing - Palatino needs more space between lines
     %------------------------------------------------
     \section{Problem Description}
-    The assignment of different teaching positions is a complicated work. The word "teaching position" 
+    \indent The assignment of different teaching positions is a complicated task. The word "teaching position" 
     includes teaching assistants, graders and instructors here at UW. Each type of position has its 
     unique qualifications and requirments. Some positions require teaching, while other do not. 
     Most students are deemed to be certified to teach. Those whose first language is not English must 
-    pass the SPEAK test to be certified. The position qualification does not only appear in different roles 
+    pass the SPEAK test to be certified. The position qualifications do not only appear in different roles 
     but also in different courses. For instance, the instructor positions would mostly be restricted to 
-    graduate students. Meanwhile, the teaching assistant positions could open to both undergraduate students and 
+    graduate students or faculty. Meanwhile, the teaching assistant positions could open to both undergraduate students and 
     graduate students.
-    \\ Furthermore, the UW introduction courses, such as CSE 142(Computer Programming I), are always popular 
-    that there are over 700 students registered for around 50 sections each quarter. On the other hand, there are 
+    \\ \indent The UW introduction courses to programming, such as CSE 142(Computer Programming I), are always popular. 
+    There are over 700 students registered for around 50 sections each quarter. On the other hand, there are 
     also tiny-sized courses that designed for under 10 students. Therefore, the assignments of teaching positions 
     must satisfy the requirements for every single course each quarter such that everyone who registered for the course
     could have equal opportunity and fairly distributed teaching resources.   
-    \\ Additionally, during the process of assignments, the course coordinators, who are in charge of assigning student candidates
-    to appropriate roles, must consider about the preference list for seperated categories submitted by the candidates. Taking
+    \\ \indent During the process of assignments, the course coordinators, who are in charge of assigning student candidates
+    to appropriate roles, must consider the preference lists submitted by the candidates. Taking
     the example of UW CSE TA application form, as the candidates apply for CSE TA positions, they needs to choose their preferences 
-    ("prefer not" or"neutral" or "prefer") for 12 distinct categories
+    ("prefer not" or"neutral" or "prefer") for 12 distinct categories:
     \begin{itemize}
         \item AI and Robotics			
         \item Architecture			
@@ -91,27 +91,27 @@
         \item Theory			
         \item Uncategorize
     \end{itemize}
-    And following the information provided by CSE department, they initialize the preference value for each course that candidates prefer, 
+    \indent Following the information provided by CSE department, they initialize the preference value for each course that candidates prefer, 
     are neutral to, or prefer not to TA to 0.8, 0.5, and 0.2, respectively. This helps "push" candidates assignment towards courses 
-    in areas they prefer and away from courses in areas they do not prefer. Without choosing preference directly, candidates could establish
+    in areas they prefer and away from courses in areas they do not prefer. Without choosing preferences directly, candidates could establish
     their course preferences as well. If candidates choose to make up their own list, they would be asked to fill in a numerical number 
     between 0.0 and 1.0 that represents their preference to teach each courses that they are certified to TA. Besides preferences from 
-    candidates side, instructors preferences should also be considered. Instructors would be asked to fill in a form of preferred students.
+    the candidates side, instructors preferences should also be considered. Instructors would be asked to fill in a form of preferred students.
     %------------------------------------------------
-    \\ Our motivation of the project is from the interview with undergraduate TAs and graduate TAs about their teaching experience in early quarters.
+    \\ \indent Our motivation for the project is from the interview with undergraduate TAs and graduate TAs about their teaching experience in early quarters.
     (Hongtao Huang, hongth@cs.washington.edu, undergraduate teaching assistant at CSE; Tejas Devanur, tdevanur@uw.edu, graduate teaching fellow at Math Department
-    ) They complained that many times, even though they self-report their preferences, the situation that they got assigned to a course which 
-    indicated as "less-preferred" is still common. Therefore, we would like to recommend a method that assigns candidates of difference
+    ) They noticed that many times, even though they self-report their preferences, they got assigned to a course which 
+    indicated as "less-preferred". Therefore, we would like to recommend a method that assigns candidates to
     courses, in such way that respects the following considerations:
     \begin{itemize}
-        \item Each candidate must be assigned to at most one course
-        \item Each course must be assigned an appropriate number of candidates
-        \item Each candidate must be assigned only to the courses for which they are qualified
-        \item Both candidates' and professors' preferences will be satisfied as much as possible
+        \item Each candidate must be assigned to at most one course.
+        \item Each course must be assigned an appropriate number of candidates.
+        \item Each candidate must be assigned only to the courses for which they are qualified.
+        \item Both candidates' and professors' preferences will be satisfied as much as possible.
     \end{itemize}
     %------------------------------------------------
     \section{Simplification}
-    For the project draft, we simulated several groups of small-scale data and compare their results 
+    \indent For the project draft, we simulated several groups of small-scale data and compare their results 
     \begin{itemize}
         \item 50 candidates with 5 courses
         \item 100 candidates with 10 courses
@@ -120,12 +120,12 @@
         \item 1000 candidates with 30 courses
     \end{itemize}
     \subsection{Input}
-    We simulated student candidates' following quantified metric:
+    \indent We simulated student candidates' following a quantified metric:
     \begin{itemize}
-        \item Preference to each role (grader, teaching assistant, instructor) for each course as numerical values between 0.0 and 
+        \item Preference for each role (grader, teaching assistant, instructor) for each course as numerical values between 0.0 and 
         1.0 where 0.0 indicates minimal preference and 1.0 indicates maximal preference. For the project draft, we would only consider
         teaching assistant roles at first.
-        \item Qualification to each role for each course, which could be represented as an indicating matrix, where 1 entry indicates
+        \item Qualification for each role for each course, which could be represented as an indicating matrix, where 1 entry indicates
         qualified for the role and 0 indicates not qualified.
     \end{itemize}
     We also need to have each professor’s preferences towards each candidate, which we implemented as a numerical matrix like preference
@@ -144,25 +144,25 @@
     \end{enumerate}
     \section{Mathematical Model}
     Let $X = {x_1,...,x_m}$ represent $m$ student candidates, let $Y = {y_1,...,y_n}$ represent $n$ courses. \\
-    Let $c_j$ represent the capacity of course $y_j$ for $1 \leq j \leq n$. \\
-    Let $$q_{ij} = \begin{cases}1\text{, if $x_i$ qualifies to teach $y_j$} \\ 0\text{, otherwise} \end{cases}$$ \\
+    Let $c_j$ represent the number of teaching assistants required for course $y_j$ for $1 \leq j \leq n$. \\
+    Let $$q_{ij} = \begin{cases}1\text{, if $x_i$ is qualified to teach $y_j$} \\ 0\text{, otherwise} \end{cases}$$ \\
     The goal is to produce a \textbf{stable assignment} of candidates to courses, represented as 
     $$a_{ij} = \begin{cases}1\text{, if $x_i$ is assigned to $y_j$} \\ 0\text{, otherwise} \end{cases}$$, 
     subject to the following hard constraints:
     \begin{enumerate}
-        \item Each candidate must be assigned to at most one course. $$\forall x_i \in X, \sum_{j = 1}^n a_{ij} = 1$$ 
-        \item Each course must be assigned an appropriate number of candidates. $$\forall y_j \in Y, \sum_{i = 1}^m a_{ij} = c_j$$
-        \item Each candidate must be assigned only to the courses for which they are qualified. $$\forall x_j \in X \forall y_j \in Y q_{ij} \geq a_{ij}$$
+        \item Each candidate must be assigned to at most one course: $$\forall x_i \in X, \sum_{j = 1}^n a_{ij} = 1$$.
+        \item Each course must be assigned an appropriate number of candidates: $$\forall y_j \in Y, \sum_{i = 1}^m a_{ij} = c_j$$.
+        \item Each candidate must be assigned only to the courses for which they are qualified: $$\forall x_j \in X \forall y_j \in Y q_{ij} \geq a_{ij}$$.
     \end{enumerate}
     \section{Solution of the Mathematical Problem}
     \subsection{Stable Marriage Algorithm}
-    In the field of computer science and mathematics, stable match problem or stable marraige problem states that that given N men and N women, 
+    \indent In the field of computer science and mathematics, the stable match problem or stable marraige problem states that given N men and N women, 
     where each person has ranked all members of the opposite sex in order of preference, marry the men and women together such that there are no 
     2 people of opposite sex who would both rather have each other than their current partners. If there are no such people, all the marriages are “stable”.
-    \\ In 1962, D. Gale and L. S. Shapley, Brown University and the RAND Corporation, proved that, for any equal number of men and women, it is guaranteed
-    that there is a stable matching. In their paper "College Admission and the Stability of Marriage", they defined the stability as following, an assignments
+    \\ \indent In 1962, D. Gale and L. S. Shapley, proved that, for any equal number of men and women, it is guaranteed
+    that there is a stable matching. In their paper "College Admission and the Stability of Marriage", they defined the stability as following, an assignment
     of applications to colleges will be called unstable if there are two applicants $\alpha$ and $\beta$ who are assigned to colleges A and B, respectively,
-    although $\beta$ prefers A to B and A prefers $\beta$ to $\alpha$. And they considered a stable assignment to be optimal if every applicant is at least 
+    although $\beta$ prefers A to B and A prefers $\beta$ to $\alpha$. They considered a stable assignment to be optimal if every applicant is at least 
     as well off under it as under any other stable assignments.
     \\ \textbf{Gale-Shapley Algorithm}
 \begin{spverbatim}
@@ -179,30 +179,30 @@ WHILE (some woman w in W is still unmatched and hasn't proposed to every man in 
         w REJECT m
 RETURN matching S
 \end{spverbatim}
-    In this project, we have to slightly modify the algorithm in order to achieve our goal. Since each course may have a capacity
-    of more than one candidates to be assigned, such changes will be made to the original Gale-Shapley Algorithm:
+    \indent In this project, we have to slightly modify the algorithm in order to achieve our goal. Since each course may have need 
+    of more than one candidate to be assigned, such changes will be made to the original Gale-Shapley Algorithm:
     \begin{enumerate}
-        \item During each round of propose, a currently unmatched candidate proposes to his/her top-choice course which he/she 
+        \item During each round of proposing, a currently unmatched candidate proposes to his/her top-choice course which he/she 
         has not proposed to yet.
-        \item After candidates finish proposing to courses, each course takes new proposers, put them into the same "set" with
+        \item After candidates finish proposing to courses, each course takes the new proposers, put them into the same "set" with
         other candidates that are already matched with this course, to form a "temporary" waitlist.
         \item If the waitlist's length exceeds the course capacity, the waitlist will be sorted by course's preference to waitlist's
         members, and only the top $k$ ones will be kept, with $k$ being the capacity of that course.
-        \item The algorithm's terminates when there are no unmatched candidates or all candidates have proposed to all courses.
+        \item The algorithm terminates when there are no unmatched candidates or all candidates have proposed to all courses.
     \end{enumerate}
     By using \verb|Python|, we implemented the following functionalities. 
     By inputting a \verb|num_candidate| and a \verb|num_course| parameters, our program can:
     \begin{enumerate}
-        \item generate $m$ candidates and $n$ courses, which \verb|num_candidate = m| and \verb|num_course = n|.
-        \item generate random preference level of each candidate to courses, and each course to candidates, which are
+        \item Generate $m$ candidates and $n$ courses, which \verb|num_candidate = m| and \verb|num_course = n|.
+        \item Generate random preference levels of each candidate for courses, and each course to candidates, which are
         floats between $0$ and $1$ inclusively.
-        \item generate capacity for each course, which is an integer between $1$ and $5$ inclusively.
-        \item generate qualification for each student to each course, which is an integer either $0$ or $1$, with $1$ indicates
+        \item Generate capacity for each course, which is an integer between $1$ and $5$ inclusively.
+        \item Generate qualification for each student for each course, which is an integer either $0$ or $1$, with $1$ indicates
         being qualified.
-        \item use the modified algorithm mentioned above to generate an assignment.
+        \item Use the modified algorithm mentioned above to generate an assignment.
     \end{enumerate}
     \section{Results}
-    In a simple run of our program, suppose we want $10$ candidates and $2$ courses, we will use the following parameters to
+    \indent In a simple run of our program, suppose we want $10$ candidates and $2$ courses, we will use the following parameters to
     the Python script:
 \begin{spverbatim}
     python stable_marrige.py --num_candidate 10 --num_course 2
@@ -358,24 +358,24 @@ course1: candidate8, candidate2, candidate3, candidate5
         \item candidates 731, 246, 961 are assigned to course29
     \end{itemize}
     \section{Improvements}
-    For further project, we will develop other two methods: Maximal Matching Algorithm and Hungarian Algorithm with simulated data and make a 
+    \indent In addition to stable marrige, we will develop other two methods: Maximal Matching Algorithm and Hungarian Algorithm with simulated data and make a 
     comparison among three methods to realize their differences not only in output but also in the process of implementation and 
     interpretation. Also, we are currently ignore candidates' GPA and past teaching experiences, which might be an important factor in decision 
     making. 
-    \\ Additionally, we are currently only focusing on teaching assistant posistions, but the real world problem includes more various teaching
+    \\ \indent Additionally, we are currently only focusing on teaching assistant posistions, but the real world problem includes more various teaching
     positions such as graders and instructors. We would also like to consider various positions for further studies.
-    \\ Another point to improve our method is to find out some other constraints to let our model fit the real world problem more. For example,
+    \\ \indent Another point to improve our method is to find out some other constraints to let our model fit the real world problem more. For example,
     we could add the constraints considering about the time confliction for candidate's course schedule. 
-    \\ In such way, I think our model could be more realistic and might be more accpetable to our community partners.
+    \\ \indent In such way, I think our model could be more realistic and might be more accpetable to our community partners.
     \section{Conclusion}
-    From the output, we could draw our conclusion that our method can build an appropriate TA assignment that satisfies candidates' preferences
+    \indent From the output, we could draw our conclusion that our method can build an appropriate TA assignment that satisfies candidates' preferences
     and Instructors' preferences as much as possible, while all requirements are met.
     \section{References}
     [1]"The college admission problem: many-to-one matching : Networks II Course blog for INFO 4220", Blogs.cornell.edu, 2018. [Online]. 
-    Available: https://blogs.cornell.edu/info4220/2016/03/18/the-college-admission-problem-many-to-one-matching/.
-    [2]D. Gale and L. Shapley, "College Admissions and the Stability of Marriage", The American Mathematical Monthly, vol. 69, no. 1, p. 9, 1962.
-    [3]"Stable Marriage Problem -- from Wolfram MathWorld", Mathworld.wolfram.com, 2018. http://mathworld.wolfram.com/StableMarriageProblem.html.
-    [4]Cs.princeton.edu, 2018. [Online]. https://www.cs.princeton.edu/~wayne/kleinberg-tardos/pdf/01StableMatching.pdf. 
+    Available: https://blogs.cornell.edu/info4220/2016/03/18/the-college-admission-problem-many-to-one-matching/. \\
+    [2]D. Gale and L. Shapley, "College Admissions and the Stability of Marriage", The American Mathematical Monthly, vol. 69, no. 1, p. 9, 1962. \\
+    [3]"Stable Marriage Problem -- from Wolfram MathWorld", Mathworld.wolfram.com, 2018. http://mathworld.wolfram.com/StableMarriageProblem.html. \\
+    [4]Cs.princeton.edu, 2018. [Online]. https://www.cs.princeton.edu/~wayne/kleinberg-tardos/pdf/01StableMatching.pdf. \\
     
     %----------------------------------------------------------------------------------------
     %	APPENDIX
