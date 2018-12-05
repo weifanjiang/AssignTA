@@ -1,0 +1,31 @@
+candidates preference to courses:
+candidate      course1      course0
+ candidate0          0.3          0.8
+ candidate1          0.8          0.2
+ candidate2          0.5          0.6
+ candidate3          0.6          0.1
+ candidate4  Unqualified          0.1
+ candidate5          0.8          0.1
+ candidate6  Unqualified          0.8
+ candidate7  Unqualified          0.5
+ candidate8            0  Unqualified
+ candidate9          0.8          0.7
+candidate10  Unqualified          0.5
+candidate11          0.5          0.4
+candidate12          0.2          0.3
+candidate13          0.4          0.4
+candidate14          0.2          0.1
+candidate15          0.9          0.6
+candidate16          0.5          0.2
+candidate17  Unqualified          0.7
+candidate18          0.7          0.4
+candidate19  Unqualified          0.4
+
+courses capacity and preference to candidates:
+course capacity  candidate16  candidate15  candidate1  candidate9  candidate17  candidate13  candidate3   candidate8  candidate2  candidate19  candidate5  candidate0   candidate4   candidate6  candidate10  candidate12  candidate18  candidate14  candidate11   candidate7
+course0        1          0.2          0.4         0.4         0.5          0.7          0.0         0.6  Unqualified         0.9          0.9         0.4         0.5            1          0.5          0.2          0.9          0.0          0.7          0.8          0.2
+course1        3          0.6          0.0         0.4         0.9  Unqualified          0.7         0.8          0.6         0.2  Unqualified         0.8         0.8  Unqualified  Unqualified  Unqualified          0.4          0.3          0.4          1.0  Unqualified
+
+Final TA assignment:
+course1: candidate9, candidate5, candidate11
+course0: candidate2

@@ -80,12 +80,24 @@ def hungarian(data):
                 else:
                     cost_mx[i][j] = 2 - data.candidate_preference[rows[i]][course] - data.course_preference[course][rows[i]]
     row_ind, col_ind = linear_sum_assignment(cost_mx)
-    print(row_ind, col_ind)
+    total_cost = cost_mx[row_ind, col_ind].sum()
+    if total_cost >= not_qualify_penalty:
+        print("Error: data is generated badly, try again :)")
+        exit(0)
+    matching = dict()
+    for course in data.courses:
+        matching[course] = list()
+    for i in range(len(rows)):
+        if 'dummy' not in columns[col_ind[i]]:
+            candidate = rows[row_ind[i]]
+            course = columns[col_ind[i]].split('_')[0]
+            matching[course].append(candidate)
+    return matching
     
 
 def max_flow(data):
     g = nx.Graph()
-    courses = 
+    courses = set()
     for candidate in data.candidates():
         for course in data.courses():
             if data.qualification[candidate][course] == 1:
@@ -96,7 +108,7 @@ def max_flow(data):
 
 
 def write_to_file(data, matching, output):
-    output_file = open(output + "", 'w')
+    output_file = open(output, 'w')
 
     output_file.write("candidates preference to courses:\n")
     column_list = list(data.courses)
