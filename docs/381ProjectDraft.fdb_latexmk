@@ -1,9 +1,9 @@
 # Fdb version 3
-["pdflatex"] 1543991163 "c:/Users/johnn/AssignTA/docs/381ProjectDraft.tex" "381ProjectDraft.pdf" "381ProjectDraft" 1543991165
-  "381ProjectDraft.aux" 1543991165 2498 3b0a192b2f3e5cd8ebfa7e9da90d13e1 ""
-  "381ProjectDraft.out" 1543991165 1179 e77f5ddfa43056c976ae297ead41f628 ""
-  "381ProjectDraft.tex" 1543991159 30681 f8f0fa3aefc14a428f6212bd7a243351 ""
-  "c:/Users/johnn/AssignTA/docs/381ProjectDraft.tex" 1543991159 30681 f8f0fa3aefc14a428f6212bd7a243351 ""
+["pdflatex"] 1543994698 "c:/Users/johnn/AssignTA/docs/381ProjectDraft.tex" "381ProjectDraft.pdf" "381ProjectDraft" 1543994700
+  "381ProjectDraft.aux" 1543994700 2498 42ff6bb69671044f050b6207be22a7eb ""
+  "381ProjectDraft.out" 1543994700 1179 5e16eb2ac4dea4c0d2f77a979d7f937b ""
+  "381ProjectDraft.tex" 1543994695 32413 f51b37592135770062ad9147e949a27f ""
+  "c:/Users/johnn/AssignTA/docs/381ProjectDraft.tex" 1543994695 32413 f51b37592135770062ad9147e949a27f ""
   "c:/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc" 1523582470 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "c:/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1523582142 2971 def0b6c1f0b107b3b936def894055589 ""
   "c:/texlive/2017/texmf-dist/fonts/map/fontname/texfonts.map" 1523582788 3332 103109f5612ad95229751940c61aada0 ""
@@ -13,6 +13,7 @@
   "c:/texlive/2017/texmf-dist/fonts/tfm/adobe/palatino/pplr9e.tfm" 1523584022 6952 02ad5d201b346d62c53c35f081142949 ""
   "c:/texlive/2017/texmf-dist/fonts/tfm/adobe/palatino/pplr9t.tfm" 1523584022 2284 861e5309a3e09d74071777f716a582cc ""
   "c:/texlive/2017/texmf-dist/fonts/tfm/adobe/palatino/pplri8r.tfm" 1523584022 2720 70000d5e623e601132eab3cded5b819b ""
+  "c:/texlive/2017/texmf-dist/fonts/tfm/adobe/palatino/pplri9e.tfm" 1523584022 4636 04bb79b19bf5315ced00732a1dac5509 ""
   "c:/texlive/2017/texmf-dist/fonts/tfm/jknappen/ec/ecrm1000.tfm" 1523582489 3584 adb004a0c8e7c46ee66cad73671f37b4 ""
   "c:/texlive/2017/texmf-dist/fonts/tfm/jknappen/ec/ectt0900.tfm" 1523582489 1536 ae7aab2f8a4bc9edfce2899f53ba88c3 ""
   "c:/texlive/2017/texmf-dist/fonts/tfm/jknappen/ec/ectt1000.tfm" 1523582489 1536 06717a2b50de47d4087ac0e6cd759455 ""
@@ -47,6 +48,7 @@
   "c:/texlive/2017/texmf-dist/fonts/vf/adobe/palatino/pplb9e.vf" 1523584022 2288 8e238fed018b54574a256cd0062e19b9 ""
   "c:/texlive/2017/texmf-dist/fonts/vf/adobe/palatino/pplr9e.vf" 1523584022 2296 bb1ff9494546688194a48c9b41b39dac ""
   "c:/texlive/2017/texmf-dist/fonts/vf/adobe/palatino/pplr9t.vf" 1523584022 1036 6bf3f57f140c19369dc13ae2329f0e57 ""
+  "c:/texlive/2017/texmf-dist/fonts/vf/adobe/palatino/pplri9e.vf" 1523584022 2296 c260490d12463c5a352580ede007bb93 ""
   "c:/texlive/2017/texmf-dist/fonts/vf/public/mathpazo/zplmr7m.vf" 1523583719 1812 de7624743c8bafe2ce204bec2f72ce7e ""
   "c:/texlive/2017/texmf-dist/fonts/vf/public/mathpazo/zplmr7t.vf" 1523583719 1532 0ba0b316cfeb3df86c9701756c9a4b71 ""
   "c:/texlive/2017/texmf-dist/fonts/vf/public/mathpazo/zplmr7v.vf" 1523583719 1436 3cc3caf644d79936444909aaff6786a8 ""
@@ -136,5 +138,5 @@
   (generated)
   "381ProjectDraft.out"
   "381ProjectDraft.log"
-  "381ProjectDraft.pdf"
   "381ProjectDraft.aux"
+  "381ProjectDraft.pdf"

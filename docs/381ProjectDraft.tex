@@ -221,15 +221,15 @@ RETURN: matching S
     \begin{lstlisting}
 *Hungarian Algorithm*
 INPUT: n*n cost matrix A
-FOR EACH (row R_A in A):
+FOR EACH (row R_A in A)
     SUBSTRACT min(R_A) from R_A
-FOR EACH (column C_A in A):
+FOR EACH (column C_A in A)
     SUBSTRACT min(C_A) from C_A
 LABEL appropriate entries so that all
       zero entries are covered and 
       minimum number of labels are 
       used
-IF (# labels = n):
+IF (# labels = n)
     RETURN: labels as assignment    
 ELSE:
     SUBSTRACT min(A) from unlabeled 
@@ -238,10 +238,49 @@ ELSE:
     REPEAT from LABEL
     \end{lstlisting}
 
-    \subsection{Maximal Matching Algorithm}
+    \subsection{Maximum Matching Algorithm}
     Consider an undirected graph $G=(V,E)$. A matching M is said to be maximal if M is not properly contained in any other matching.
     Formally, $M\notin M^{'}$ for any matching $M^{'}$ of $G$. Intuitively, this is equivalent to saying that a matching is maximal 
-    if we cannot add any edge to the existing set. 
+    if we cannot add any edge to the existing set. And a matching $M$ is said to be Maximum if for any other matching $M^{'}$, 
+    $|M|\geq |M^{'}|$. Generally, maximum matching applied to unweighted graph more but for this project,
+    we would like to modify the algorithm with weights in order to meet our propose. With researching, we decided to implement the method
+    introduced by \textit{Zvi Galil}, Department of Computer Science, Columbia University, in 1986. In his study "Efficient Algorithms
+    for Maximum Matching in Graphs", he developed this method based on Berge's Theorem, "the matching M has maximum cardinality if and 
+    only if there is no augmenting path with respect to M."
+
+    \indent Given a graph, $G=(V,E)$ and a matching $M \subset E$, a path $P$ is called an augmenting path for $M$ if:
+    \begin{itemize}
+        \item The two end points of $P$ are unmatched by $M$
+        \item The edges of P alternate between edges $\in M$ and edges $\notin M$.
+    \end{itemize}
+    
+    \begin{lstlisting}
+*Maximum Matching*
+INPUT: Graph G
+M <- random selected matching
+WHILE (there is a blossom and there 
+       is an augmenting path in M)
+    GROW the forest, labeling the 
+         vertices even/odd
+    IF (there is a blossom in the 
+        graph)
+        SHRINK the blossom to obtain 
+               a new graph G'
+        CONTINUE foresting
+    ELSE
+        FIND such even - even edges 
+             to obtain a maximally 
+             disjoint set of 
+             augmenting paths 
+             (P1,...,Pk)
+    M <- switching edges along P's 
+         from in-to-out of M and 
+         vice-versa
+EXPAND all blossoms to obtain the 
+       maximum matching in the 
+       original graph G.
+
+    \end{lstlisting}
     \section{Results}
     \indent In a simple run of our program, suppose we want $10$ candidates and $2$ courses, we will use the following parameters to
     the Python script:
