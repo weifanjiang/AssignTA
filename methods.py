@@ -2,8 +2,7 @@ import data_generator
 import argparse
 import pandas as pd
 import numpy as np
-import scipy
-import networkx as nx
+from scipy.optimize import linear_sum_assignment
 
 pd.set_option('display.max_rows', 500)
 pd.set_option('display.max_columns', 500)
@@ -60,7 +59,29 @@ def run_stable_marrige(data):
 def hungarian(data):
     rows = list(data.candidates)
     columns = []
-    for course in data.courses()
+    for course in data.courses:
+        for i in range(data.course_capacity[course]):
+            columns.append(course + '_' + str(i))
+    counter = 0
+    while len(columns) < len(rows):
+        columns.append('dummy' + str(counter))
+        counter += 1
+    cost_mx = np.zeros((len(rows), len(columns)))
+    not_qualify_penalty = 500000
+    dummy_pref = 10
+    for i in range(len(rows)):
+        for j in range(len(columns)):
+            if 'dummy' in columns[j]:
+                cost_mx[i][j] = dummy_pref
+            else:
+                course = columns[j].split('_')[0]
+                if data.qualification[rows[i]][course] == 0:
+                    cost_mx[i][j] = not_qualify_penalty
+                else:
+                    cost_mx[i][j] = 2 - data.candidate_preference[rows[i]][course] - data.course_preference[course][rows[i]]
+    row_ind, col_ind = linear_sum_assignment(cost_mx)
+    print(row_ind, col_ind)
+    
 
 def max_flow(data):
     g = nx.Graph()
