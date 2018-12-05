@@ -26,7 +26,11 @@ def generate(num_candidate, num_course):
     for candidate in data.candidates:
         data.qualification[candidate] = dict()
         for course in data.courses:
-            data.qualification[candidate][course] = random.choice([0, 1])
+            prob = random.uniform(0, 1)
+            if prob < 0.8:
+                data.qualification[candidate][course] = 1
+            else:
+                data.qualification[candidate][course] = 0
     return data
 
 def main():

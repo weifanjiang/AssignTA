@@ -1,13 +1,14 @@
 import data_generator
 import argparse
 import pandas as pd
+import numpy as np
+import scipy
 
 pd.set_option('display.max_rows', 500)
 pd.set_option('display.max_columns', 500)
 pd.set_option('display.width', 1000)
 
-def run_stable_marrige(num_candidate, num_course, output):
-    data = data_generator.generate(num_candidate, num_course)
+def run_stable_marrige(data):
     terminated = False
     applied_to = dict()
     unmatched = set()
@@ -53,7 +54,12 @@ def run_stable_marrige(num_candidate, num_course, output):
         for candidate in unmatched:
             if len(applied_to[candidate]) < len(qualified[candidate]):
                 terminated = False
-    write_to_file(data, current_match, output)
+    return matching
+
+def hungarian(data):
+    rows = list(data.candidates)
+    columns = []
+    for course in data.courses()
 
 def write_to_file(data, matching, output):
     output_file = open(output + "", 'w')
@@ -105,9 +111,20 @@ def main():
     parser.add_argument('--num_candidate', type=int)
     parser.add_argument('--num_course', type=int)
     parser.add_argument('--output')
+    parser.add_argument('--method')
     args = parser.parse_args()
 
-    run_stable_marrige(args.num_candidate, args.num_course, args.output)
+
+    data = data_generator.generate(args.num_candidate, args.num_course)
+
+    if args.method == 'stable_marrige':
+        matching = run_stable_marrige(data)
+        write_to_file(data, matching, args.output)
+    elif args.method == 'hungarian':
+        matching = hungarian(data)
+        write_to_file(data, matching, args.output)
+    else:
+        print("haven't implemented yet")
 
 if __name__ == "__main__":
     main()
