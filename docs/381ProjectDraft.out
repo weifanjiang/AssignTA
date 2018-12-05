@@ -1,0 +1,18 @@
+\BOOKMARK [1][-]{section.1}{Problem Description}{}% 1
+\BOOKMARK [1][-]{section.2}{Simplification}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Input}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Assumption}{section.2}% 4
+\BOOKMARK [1][-]{section.3}{Mathematical Model}{}% 5
+\BOOKMARK [1][-]{section.4}{Solution of the Mathematical Problem}{}% 6
+\BOOKMARK [2][-]{subsection.4.1}{Stable Marriage Algorithm}{section.4}% 7
+\BOOKMARK [2][-]{subsection.4.2}{Hungarian Algorithm}{section.4}% 8
+\BOOKMARK [2][-]{subsection.4.3}{Maximal Matching Algorithm}{section.4}% 9
+\BOOKMARK [1][-]{section.5}{Results}{}% 10
+\BOOKMARK [2][-]{subsection.5.1}{Group 1: 50 candidates and 5 courses}{section.5}% 11
+\BOOKMARK [2][-]{subsection.5.2}{Group 2: 100 candidates and 10 courses}{section.5}% 12
+\BOOKMARK [2][-]{subsection.5.3}{Group 3: 500 candidates and 20 courses}{section.5}% 13
+\BOOKMARK [2][-]{subsection.5.4}{Group 4: 800 candidates and 25 courses}{section.5}% 14
+\BOOKMARK [2][-]{subsection.5.5}{Group 5: 1000 candidates and 30 courses}{section.5}% 15
+\BOOKMARK [1][-]{section.6}{Improvements}{}% 16
+\BOOKMARK [1][-]{section.7}{Conclusion}{}% 17
+\BOOKMARK [1][-]{section.8}{References}{}% 18
