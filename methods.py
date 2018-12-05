@@ -3,6 +3,7 @@ import argparse
 import pandas as pd
 import numpy as np
 from scipy.optimize import linear_sum_assignment
+import networkx as nx
 
 pd.set_option('display.max_rows', 500)
 pd.set_option('display.max_columns', 500)
@@ -54,7 +55,7 @@ def run_stable_marrige(data):
         for candidate in unmatched:
             if len(applied_to[candidate]) < len(qualified[candidate]):
                 terminated = False
-    return matching
+    return current_match
 
 def hungarian(data):
     rows = list(data.candidates)
@@ -83,15 +84,27 @@ def hungarian(data):
     print(row_ind, col_ind)
     
 
-def max_flow(data):
+def maximal_matching(data):
     g = nx.Graph()
-    courses = 
-    for candidate in data.candidates():
-        for course in data.courses():
-            if data.qualification[candidate][course] == 1:
-                sum_of_preference = data.candidate_preference[candidate][course] +\
-                                    data.course_preference[course][candidate]
-                g.add_edge(candidate, course, sum_of_preference)
+    courses = [course+"_"+str(i) for course in data.courses\
+                for i in range(data.course_capacity[course])]
+    for candidate in data.candidates:
+        for course in courses:
+            if data.qualification[candidate][course.split('_')[0]] == 1:
+                sum_of_preference = data.candidate_preference[candidate][course.split('_')[0]] +\
+                                    data.course_preference[course.split('_')[0]][candidate]
+                g.add_edge(candidate, course, weight=sum_of_preference)
+    matching = nx.maximal_matching(g)
+    output = dict()
+    for assignment in matching:
+        assignment = sorted(assignment)
+        candidate, course = assignment[0], assignment[1].split('_')[0]
+        try:
+            output[course].append(candidate)
+        except(KeyError):
+            output[course] = [candidate]
+    return output
+    
     
 
 
@@ -138,7 +151,7 @@ def write_to_file(data, matching, output):
             for i in range(1, len(TAs)):
                 people += ", " + TAs[i]
         new_data['assigned candidates'] = people
-        output_file.write(course + ": " + people + "\n")
+        output_file.write(course + ":," + people + "\n")
 
 
 def main():
@@ -158,8 +171,8 @@ def main():
     elif args.method == 'hungarian':
         matching = hungarian(data)
         write_to_file(data, matching, args.output)
-    elif args.method == "max_flow":
-        matching = max_flow(data)
+    elif args.method == "maximal_matching":
+        matching = maximal_matching(data)
         write_to_file(data, matching, args.output)
     else:
         print("haven't implemented yet")
