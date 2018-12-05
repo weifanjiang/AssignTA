@@ -117,7 +117,7 @@ def maximal_matching(data):
             output[course] = [candidate]
     return output
 
-def write_to_file(data, matching, output):
+def write_to_file(data, matching, output, score, course_satisfication, candidate_satisfication):
     output_file = open(output, 'w')
 
     output_file.write("candidates preference to courses:\n")
@@ -161,6 +161,30 @@ def write_to_file(data, matching, output):
                 people += ", " + TAs[i]
         new_data['assigned candidates'] = people
         output_file.write(course + ":," + people + "\n")
+    
+    output_file.write("\n")
+    output_file.write("Score for assignment: {}\n".format(score))
+    output_file.write("Percentage of courses get top 3 choice of candidates: {}\n".format(course_satisfication))
+    output_file.write("Percentage of candidates get top 3 choice of courses: {}\n".format(candidate_satisfication))
+
+def evaluate_matching(data, matching):
+    score = 0
+    total_matching = 0
+    top_3_course = 0
+    top_3_candidate = 0
+    for course, candidates in matching.items():
+        total_matching += len(candidates)
+        candidate_ranking = list(data.candidates)
+        candidate_ranking = sorted(candidate_ranking, key=lambda x: data.course_preference[course][x], reverse=True)
+        for candidate in candidates:
+            score += data.candidate_preference[candidate][course] + data.course_preference[course][candidate]
+            course_ranking = list(data.courses)
+            course_ranking = sorted(course_ranking, key=lambda x: data.candidate_preference[candidate][x], reverse=True)
+            if candidate_ranking.index(candidate) < 3:
+                top_3_course += 1
+            if course_ranking.index(course) < 3:
+                top_3_candidate += 1
+    return round(score, 2), round(top_3_course * 100.0/total_matching, 2), round(top_3_candidate * 100.0/total_matching, 2)
 
 
 def main():
@@ -176,13 +200,16 @@ def main():
 
     if args.method == 'stable_marrige':
         matching = run_stable_marrige(data)
-        write_to_file(data, matching, args.output)
+        score, course_satisfication, candidate_satisfication = evaluate_matching(data, matching)
+        write_to_file(data, matching, args.output, score, course_satisfication, candidate_satisfication)
     elif args.method == 'hungarian':
         matching = hungarian(data)
-        write_to_file(data, matching, args.output)
+        score, course_satisfication, candidate_satisfication = evaluate_matching(data, matching)
+        write_to_file(data, matching, args.output, score, course_satisfication, candidate_satisfication)
     elif args.method == "maximal_matching":
         matching = maximal_matching(data)
-        write_to_file(data, matching, args.output)
+        score, course_satisfication, candidate_satisfication = evaluate_matching(data, matching)
+        write_to_file(data, matching, args.output, score, course_satisfication, candidate_satisfication)
     else:
         print("haven't implemented yet")
 
