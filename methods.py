@@ -3,6 +3,7 @@ import argparse
 import pandas as pd
 import numpy as np
 import scipy
+import networkx as nx
 
 pd.set_option('display.max_rows', 500)
 pd.set_option('display.max_columns', 500)
@@ -61,6 +62,18 @@ def hungarian(data):
     columns = []
     for course in data.courses()
 
+def max_flow(data):
+    g = nx.Graph()
+    courses = 
+    for candidate in data.candidates():
+        for course in data.courses():
+            if data.qualification[candidate][course] == 1:
+                sum_of_preference = data.candidate_preference[candidate][course] +\
+                                    data.course_preference[course][candidate]
+                g.add_edge(candidate, course, sum_of_preference)
+    
+
+
 def write_to_file(data, matching, output):
     output_file = open(output + "", 'w')
 
@@ -106,6 +119,7 @@ def write_to_file(data, matching, output):
         new_data['assigned candidates'] = people
         output_file.write(course + ": " + people + "\n")
 
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--num_candidate', type=int)
@@ -122,6 +136,9 @@ def main():
         write_to_file(data, matching, args.output)
     elif args.method == 'hungarian':
         matching = hungarian(data)
+        write_to_file(data, matching, args.output)
+    elif args.method == "max_flow":
+        matching = max_flow(data)
         write_to_file(data, matching, args.output)
     else:
         print("haven't implemented yet")

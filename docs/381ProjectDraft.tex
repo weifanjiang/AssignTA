@@ -23,6 +23,10 @@
         filecolor=magenta,      
         urlcolor=cyan,
     }
+    \lstset{
+        basicstyle=\ttfamily,
+        frame=single
+    }
     \urlstyle{same}
     \setlength{\parindent}{18pt}
     \setlist[itemize]{noitemsep} % Make itemize lists more compact
@@ -164,21 +168,29 @@
     of applications to colleges will be called unstable if there are two applicants $\alpha$ and $\beta$ who are assigned to colleges A and B, respectively,
     although $\beta$ prefers A to B and A prefers $\beta$ to $\alpha$. They considered a stable assignment to be optimal if every applicant is at least 
     as well off under it as under any other stable assignments.
-    \\ \textbf{Gale-Shapley Algorithm}
-\begin{spverbatim}
-INPUT: preference list for men and women
-INITIALIZE matching set S to an empty set
-WHILE (some woman w in W is still unmatched and hasn't proposed to every man in M)
-    m <- first man on w's preference list to whom w has not yet proposed
+    \\ 
+    \begin{lstlisting}
+*Gale-Shapley Algorithm*
+INPUT: preference list for men and 
+women
+INITIALIZE matching set S to an empty 
+set
+WHILE (some woman w in W is still 
+    unmatched and hasn't proposed 
+    to every man in M)
+    m <- first man on w's preference 
+        list to whom w has not yet 
+        proposed
     IF (m is unmatched)
         ADD pair (m, w) to S
-    ELSE IF (m prefers w to existing pair w')
-        REPLACE (m, w') with (m, w) in S
+    ELSE IF (m prefers w to existing 
+            pair w')
+        REPLACE (m, w') with (m, w) 
         FREE w'
     ELSE 
         w REJECT m
-RETURN matching S
-\end{spverbatim}
+RETURN: matching S
+    \end{lstlisting}
     \indent In this project, we have to slightly modify the algorithm in order to achieve our goal. Since each course may have need 
     of more than one candidate to be assigned, such changes will be made to the original Gale-Shapley Algorithm:
     \begin{enumerate}
@@ -201,6 +213,33 @@ RETURN matching S
         being qualified.
         \item Use the modified algorithm mentioned above to generate an assignment.
     \end{enumerate}
+
+    \subsection{Hungarian Algorithm}
+    The Hungarian Algorithm is a combinatorial optimization algorithm that solves the assignment problem in polynomial time.
+    It was developed and published in 1955 by Harold Kuhn, who gave "Hungarian Algorithm" its name according to the previous works
+    of two Hungarian mathematicians.
+    \begin{lstlisting}
+*Hungarian Algorithm*
+INPUT: n*n cost matrix A
+FOR EACH (row R_A in A):
+    SUBSTRACT min(R_A) from R_A
+FOR EACH (column C_A in A):
+    SUBSTRACT min(C_A) from C_A
+LABEL appropriate entries so that all
+      zero entries are covered and 
+      minimum number of labels are 
+      used
+IF (# labels = n):
+    RETURN: labels as assignment    
+ELSE:
+    SUBSTRACT min(A) from unlabeled 
+              R_A
+    ADD min(A) to unlabeled C_A
+    REPEAT from LABEL
+
+
+    
+    \end{lstlisting}
     \section{Results}
     \indent In a simple run of our program, suppose we want $10$ candidates and $2$ courses, we will use the following parameters to
     the Python script:
