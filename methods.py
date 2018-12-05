@@ -4,6 +4,10 @@ import pandas as pd
 import numpy as np
 from scipy.optimize import linear_sum_assignment
 import networkx as nx
+import matplotlib.pyplot as plt
+import time
+import progressbar
+import os
 
 pd.set_option('display.max_rows', 500)
 pd.set_option('display.max_columns', 500)
@@ -96,7 +100,7 @@ def hungarian(data):
             matching[course].append(candidate)
     return matching
     
-def maximal_matching(data):
+def maximum_matching(data):
     candidates = data.candidates
     courses = [course+"_"+str(i) for course in data.courses\
                 for i in range(data.course_capacity[course])]
@@ -192,27 +196,72 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--num_candidate', type=int)
     parser.add_argument('--num_course', type=int)
-    parser.add_argument('--output')
-    parser.add_argument('--method')
+    parser.add_argument('--if_figure', type=bool, default=False)
     args = parser.parse_args()
 
-
-    data = data_generator.generate(args.num_candidate, args.num_course)
-
-    if args.method == 'stable_marrige':
-        matching = run_stable_marrige(data)
-        score, course_satisfication, candidate_satisfication = evaluate_matching(data, matching)
-        write_to_file(data, matching, args.output, score, course_satisfication, candidate_satisfication)
-    elif args.method == 'hungarian':
-        matching = hungarian(data)
-        score, course_satisfication, candidate_satisfication = evaluate_matching(data, matching)
-        write_to_file(data, matching, args.output, score, course_satisfication, candidate_satisfication)
-    elif args.method == "maximal_matching":
-        matching = maximal_matching(data)
-        score, course_satisfication, candidate_satisfication = evaluate_matching(data, matching)
-        write_to_file(data, matching, args.output, score, course_satisfication, candidate_satisfication)
+    if not args.if_figure:
+        data = data_generator.generate(args.num_candidate, args.num_course)
+        method = input("Method?([s]table_marrige, [h]ungarian, [m]aximum_matching): ")
+        output = input("Save to?(.csv): ")
+        while output == '':
+            output = input("Please enter a valid file name: ")
+        if method == 'stable_marrige' or 's':
+            matching = run_stable_marrige(data)
+            score, course_satisfication, candidate_satisfication = evaluate_matching(data, matching)
+            write_to_file(data, matching, output, score, course_satisfication, candidate_satisfication)
+        elif method == 'hungarian' or 'h':
+            matching = hungarian(data)
+            score, course_satisfication, candidate_satisfication = evaluate_matching(data, matching)
+            write_to_file(data, matching, output, score, course_satisfication, candidate_satisfication)
+        elif method == "maximum_matching" or 'm':
+            matching = maximum_matching(data)
+            score, course_satisfication, candidate_satisfication = evaluate_matching(data, matching)
+            write_to_file(data, matching, output, score, course_satisfication, candidate_satisfication)
+        else:
+            print("haven't implemented yet")
     else:
-        print("haven't implemented yet")
+        n = input("Number of Simulations?: ")
+        n = int(n)
+        while n < 100:
+            n = input("Try a number > 100: ")
+            n = int(n)
+        dir = str(args.num_candidate) + "candidates_" + str(args.num_course) + "courses_" + str(n) + "simulations"
+        if not os.path.exists('figures\\' + dir):
+            os.makedirs('figures\\' + dir)
+        score = np.zeros([n, 3])
+        prof_rate = np.zeros([n, 3])
+        can_rate = np.zeros([n, 3])
+        for i in progressbar.progressbar(range(n)):
+            data = data_generator.generate(args.num_candidate, args.num_course)
+            sm = run_stable_marrige(data)
+            hg = hungarian(data)
+            mm = maximum_matching(data)
+            score[i, 0], prof_rate[i, 0], can_rate[i, 0] = evaluate_matching(data, sm)
+            score[i, 1], prof_rate[i, 1], can_rate[i, 1] = evaluate_matching(data, hg)
+            score[i, 2], prof_rate[i, 2], can_rate[i, 2] = evaluate_matching(data, mm)
+        plt.figure(1)
+        plt.hist(score[:,0], bins=20, label='Stable Marriage', alpha=0.6)
+        plt.hist(score[:,1], bins=20, label='Hungarian', alpha=0.6)
+        plt.hist(score[:,2], bins=20, label='Maximum Matching', alpha=0.6)
+        plt.title('Score, Monte Carlo n ={}'.format(n))
+        plt.legend()
+        plt.savefig('figures\\'+dir+'\scores.png')
+        plt.figure(2)
+        plt.hist(prof_rate[:,0], bins=20, label='Stable Marriage', alpha=0.6)
+        plt.hist(prof_rate[:,1], bins=20, label='Hungarian', alpha=0.6)
+        plt.hist(prof_rate[:,2], bins=20, label='Maximum Matching', alpha=0.6)
+        plt.title('Professors satisfication rate, Monte Carlo n ={}'.format(n))
+        plt.legend()
+        plt.savefig('figures\\'+dir+'\prof_rate.png')
+        plt.figure(3)
+        plt.hist(can_rate[:,0], bins=20, label='Stable Marriage', alpha=0.6)
+        plt.hist(can_rate[:,1], bins=20, label='Hungarian', alpha=0.6)
+        plt.hist(can_rate[:,2], bins=20, label='Maximum Matching', alpha=0.6)
+        plt.title('Candidates satisfication rate, Monte Carlo n ={}'.format(n))
+        plt.legend()
+        plt.savefig('figures\\'+dir+'\can_rate.png')
+
+
 
 if __name__ == "__main__":
     main()

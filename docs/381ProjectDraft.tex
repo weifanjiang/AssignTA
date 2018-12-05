@@ -156,7 +156,7 @@
     \begin{enumerate}
         \item Each candidate must be assigned to at most one course: $$\forall x_i \in X, \sum_{j = 1}^n a_{ij} = 1$$.
         \item Each course must be assigned an appropriate number of candidates: $$\forall y_j \in Y, \sum_{i = 1}^m a_{ij} = c_j$$.
-        \item Each candidate must be assigned only to the courses for which they are qualified: $$\forall x_j \in X \forall y_j \in Y q_{ij} \geq a_{ij}$$.
+        \item Each candidate must be assigned only to the courses for which they are qualified: $$\forall x_j \in X,\ \forall y_j \in Y q_{ij} \geq a_{ij}$$.
     \end{enumerate}
     \section{Solution of the Mathematical Problem}
     \subsection{Stable Marriage Algorithm}
@@ -222,9 +222,9 @@ RETURN: matching S
 *Hungarian Algorithm*
 INPUT: n*n cost matrix A
 FOR EACH (row R_A in A)
-    SUBSTRACT min(R_A) from R_A
+    SUBTRACT min(R_A) from R_A
 FOR EACH (column C_A in A)
-    SUBSTRACT min(C_A) from C_A
+    SUBTRACT min(C_A) from C_A
 LABEL appropriate entries so that all
       zero entries are covered and 
       minimum number of labels are 
@@ -232,7 +232,7 @@ LABEL appropriate entries so that all
 IF (# labels = n)
     RETURN: labels as assignment    
 ELSE:
-    SUBSTRACT min(A) from unlabeled 
+    SUBTRACT min(A) from unlabeled 
               R_A
     ADD min(A) to unlabeled C_A
     REPEAT from LABEL
