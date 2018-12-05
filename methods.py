@@ -48,6 +48,7 @@ def run_stable_marrige(data):
             for c in new_candidates:
                 curr_matched_candidates.add(c)
         current_match = new_match.copy()
+        unmatched = set()
         for candidate in data.candidates:
             if candidate not in curr_matched_candidates:
                 unmatched.add(candidate)
