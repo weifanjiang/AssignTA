@@ -96,18 +96,18 @@ def hungarian(data):
             matching[course].append(candidate)
     return matching
     
-
 def maximal_matching(data):
-    g = nx.Graph()
+    candidates = data.candidates
     courses = [course+"_"+str(i) for course in data.courses\
                 for i in range(data.course_capacity[course])]
-    for candidate in data.candidates:
+    g = nx.Graph()
+    for candidate in candidates:
         for course in courses:
             if data.qualification[candidate][course.split('_')[0]] == 1:
                 sum_of_preference = data.candidate_preference[candidate][course.split('_')[0]] +\
                                     data.course_preference[course.split('_')[0]][candidate]
                 g.add_edge(candidate, course, weight=sum_of_preference)
-    matching = nx.maximal_matching(g)
+    matching = nx.max_weight_matching(g)
     output = dict()
     for assignment in matching:
         assignment = sorted(assignment)

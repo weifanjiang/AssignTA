@@ -1,9 +1,9 @@
 # Fdb version 3
-["pdflatex"] 1543981390 "c:/Users/johnn/AssignTA/docs/381ProjectDraft.tex" "381ProjectDraft.pdf" "381ProjectDraft" 1543981392
-  "381ProjectDraft.aux" 1543981391 2389 f1e93ceb002d497becd66b684a6f8fe2 ""
-  "381ProjectDraft.out" 1543981391 1103 427ceeda03c4419748262c7d4d3cf5f7 ""
-  "381ProjectDraft.tex" 1543981389 30323 ab19cda81f42c99fcd07d4a2e92a336a ""
-  "c:/Users/johnn/AssignTA/docs/381ProjectDraft.tex" 1543981389 30323 ab19cda81f42c99fcd07d4a2e92a336a ""
+["pdflatex"] 1543991163 "c:/Users/johnn/AssignTA/docs/381ProjectDraft.tex" "381ProjectDraft.pdf" "381ProjectDraft" 1543991165
+  "381ProjectDraft.aux" 1543991165 2498 3b0a192b2f3e5cd8ebfa7e9da90d13e1 ""
+  "381ProjectDraft.out" 1543991165 1179 e77f5ddfa43056c976ae297ead41f628 ""
+  "381ProjectDraft.tex" 1543991159 30681 f8f0fa3aefc14a428f6212bd7a243351 ""
+  "c:/Users/johnn/AssignTA/docs/381ProjectDraft.tex" 1543991159 30681 f8f0fa3aefc14a428f6212bd7a243351 ""
   "c:/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc" 1523582470 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "c:/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1523582142 2971 def0b6c1f0b107b3b936def894055589 ""
   "c:/texlive/2017/texmf-dist/fonts/map/fontname/texfonts.map" 1523582788 3332 103109f5612ad95229751940c61aada0 ""
@@ -135,6 +135,6 @@
   "c:/texlive/2017/texmf.cnf" 1523585319 673 4ae7b2f49cee444c5343a45b5d0f169c ""
   (generated)
   "381ProjectDraft.out"
-  "381ProjectDraft.aux"
   "381ProjectDraft.log"
   "381ProjectDraft.pdf"
+  "381ProjectDraft.aux"

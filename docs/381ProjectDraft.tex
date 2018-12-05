@@ -236,10 +236,12 @@ ELSE:
               R_A
     ADD min(A) to unlabeled C_A
     REPEAT from LABEL
-
-
-    
     \end{lstlisting}
+
+    \subsection{Maximal Matching Algorithm}
+    Consider an undirected graph $G=(V,E)$. A matching M is said to be maximal if M is not properly contained in any other matching.
+    Formally, $M\notin M^{'}$ for any matching $M^{'}$ of $G$. Intuitively, this is equivalent to saying that a matching is maximal 
+    if we cannot add any edge to the existing set. 
     \section{Results}
     \indent In a simple run of our program, suppose we want $10$ candidates and $2$ courses, we will use the following parameters to
     the Python script:
