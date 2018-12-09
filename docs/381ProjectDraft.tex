@@ -42,7 +42,7 @@
     \author{ \parbox{3 in}{\centering Chongyi Xu, Weifan Jiang \\
              University of Washington\\
              MATH 381 Project Draft\\
-             {\tt\small chongyix@uw.edu}}
+             {\tt\small chongyix@uw.edu}\\{\tt\small wfjiang@uw.edu}}
     }
 
     \begin{document}
@@ -107,12 +107,12 @@
     ) They noticed that many times, even though they self-report their preferences, they got assigned to a course which 
     indicated as "less-preferred". Therefore, we would like to recommend a method that assigns candidates to
     courses, in such way that respects the following considerations:
-    \begin{itemize}
+    \begin{enumerate}
         \item Each candidate must be assigned to at most one course.
         \item Each course must be assigned an appropriate number of candidates.
         \item Each candidate must be assigned only to the courses for which they are qualified.
         \item Both candidates' and professors' preferences will be satisfied as much as possible.
-    \end{itemize}
+    \end{enumerate}
     %------------------------------------------------
     \section{Simplification}
     \indent For the project draft, we simulated several groups of small-scale data and compare their results 
@@ -237,7 +237,32 @@ ELSE:
     ADD min(A) to unlabeled C_A
     REPEAT from LABEL
     \end{lstlisting}
-
+    For this problem, the original Hungatian Algorithm has to be modified to be compatible with this problem:
+    \begin{enumerate}
+        \item The result of this problem is a many-to-one matching (multiple candidates assigned to one course). In order to 
+        convert the problem to one-to-one matching, we will be splitting each course into slots (for example, if course A
+        requires 5 candidates to be assigned, we will have 5 "slots" from A1 to A5, to corresponds to the 5 candidates wanted
+        by A).
+        \item Hungarian Algorithm also needs to run on a square matrix. We assume that there will always be more candidates than
+        slots (if not, the department will need to advertise more to get more student apply as candidate). Thus, we can add
+        "dummy" slots to make number of candidates and number of slots equal to each other. If a candidate matches to one of the
+        dummy slots, this candidate is unselected for the row of teaching assistant.
+        \item A "cost matrix" needs to be constructed for Hungarian Algorithm, and optimal solution (which is the output of
+        Hungarian Algorithm) has minimized total cost. We let the row of cost matrix to be candidates, and column be the slots.
+        Therefore, the value of $(i. j)$ should be:
+        \begin{itemize}
+            \item if $j$ is a "dummy" slot, then $(i, j)$ should be $0$ regardless of $i$. We need all "dummy" slots to have
+            the same value, so the optimality if all "non-dummy" matches are not influenced by the dummy variables.
+            \item if $i$ is not qualified to teach $j$, the value of $(i, j)$ should be infinity, therefore the Hungarian algorithm
+            will avoid large cost and not choosing the unqualified entry. If the output assignment's cost is infinity, it indicates
+            that no possible matching is available.
+            \item If $i$ qualified to teach $j$, the $(i, j)$ entry should be $2 - \text{i's preference to j} - \text{j's preference to i}$
+            therefore the cost is smaller if the sum of preference of candidate and course to each other is larger.
+        \end{itemize}
+    \end{enumerate}
+    After making such modifications, Hungarian's algorithm will output an assignment of candidates to slots, which can be
+    transferred to an assignment of candidates to courses. The sum of preferences to each other for all matched pair of
+    candidates and courses is maximized.
     \subsection{Maximum Matching Algorithm}
     Consider an undirected graph $G=(V,E)$. A matching M is said to be maximal if M is not properly contained in any other matching.
     Formally, $M\notin M^{'}$ for any matching $M^{'}$ of $G$. Intuitively, this is equivalent to saying that a matching is maximal 
@@ -282,168 +307,29 @@ EXPAND all blossoms to obtain the
 
     \end{lstlisting}
     \section{Results}
-    \indent In a simple run of our program, suppose we want $10$ candidates and $2$ courses, we will use the following parameters to
-    the Python script:
-\begin{spverbatim}
-    python stable_marrige.py --num_candidate 10 --num_course 2
-\end{spverbatim}
-    which will generate input data and produce an assignment under the assumption of $10$ candidates and $2$ courses. Due to
-    random data generation, the output of each trial may differ. Here's one sample trial's output with parameters described above:
-\begin{spverbatim}
-candidates preference to courses:
-candidate      course0      course1
-candidate0  Unqualified          0.2
-candidate1          0.1          0.6
-candidate2          0.2          0.4
-candidate3          0.6            0
-candidate4          0.6          0.3
-candidate5  Unqualified          0.9
-candidate6          0.2  Unqualified
-candidate7          0.1  Unqualified
-candidate8  Unqualified          0.9
-candidate9          0.3  Unqualified
+    \subsection{Evaluating an assignment}
+    In order to compare and contrast each algorithm discussed above, we will develop a "score function", which takes input
+    of a produced assignment of candidates and courses, and output a numerical score, which higher score indicates better
+    quality of the assignment.\\
+    The input of the scoring function should be a serie of binary variables:
+    $$\sigma_{i,j}=\begin{cases}1\text{, if candidate i is assigned to course j} \\
+    0\text{, else}\end{cases}$$
+    for each candidate $i$ and each course $j$ in the assignment.\\
+    Let $m_{i, j}$ be candidate $i$'s preference score to course $j$, and $n_{j, i}$ be course $j$'s preference to candidate $i$,
+    both $m$ and $n$ have value between $0$ and $1$. The return value of score function should be:
+    $$\sum_i\sum_j \sigma_{i,j}(\lambda_1m_{i,j} + \lambda_2n_{j,i})$$.
+    Which $\lambda_1$ and $\lambda_2$ are different weights we consider course's and candidates's preferences to the other. Currently,
+    we use $1$ for both weights to value candidates and courses' opinions equally when scoring an assignment.
+    All invalid assignments which breaks any of rule 1, 2, 3 at the end of section "Abstract" does not receive a score and should not be
+    considered. (Theoretically, each algorithm described above should avoid generating an invalid assignment.)
 
-courses capacity and preference to candidates:
-course capacity   candidate5   candidate8   
-course0        4  Unqualified  Unqualified         
-course1        4          0.4          0.1         
-
-candidate3  candidate2  candidate0 
-       0.3         0.4  Unqualified
-       0.6         0.6           0 
-
-candidate9  candidate4   candidate7   
-        0.5        0.4         0.9 
-Unqualified        0.7  Unqualified 
-
-candidate6  candidate1
-0.1                0.7
-Unqualified        0.2
-
-Final TA assignment:
-course0: candidate7, candidate1, candidate9, candidate4
-course1: candidate8, candidate2, candidate3, candidate5
-\end{spverbatim}
-    The portion of output under the line \verb|Final TA assignment:| shows the produced assignment of TAs: for each course,
-    the candidates assigned to that course are behind the \verb|:| sign. In other words:
-    \begin{itemize}
-        \item candidate 7, 1, 9, 4 are assigned to course 0.
-        \item candidate 8, 2, 3, 5 are assigned to course 1.
-        \item candidate 0, 6 are unselected for the TA role.
-    \end{itemize}
-    In such way, we have our input data as we listed in the previous section and generate our assignment output
-    \subsection{Group 1: 50 candidates and 5 courses}
-    \begin{itemize}
-        \item candidates 25, 1, 35, 49, 28 are assigned to course0
-        \item candidates 16, 14, 44 are assigned to course1
-        \item candidates 21, 45 are assigned to course2
-        \item candidates 46, 8 are assigned to course3
-        \item candidates 1 are assigned to course4
-    \end{itemize}
-    \subsection{Group 2: 100 candidates and 10 courses}
-    \begin{itemize}
-        \item candidates 25, 70, 4 are assigned to course0
-        \item candidates 10 are assigned to course1
-        \item candidates 75, 3 are assigned to course2
-        \item candidates 56, 62, 5, 85, 20 are assigned to course3
-        \item candidates 72, 23 are assigned to course4
-        \item candidates 45 are assigned to course5
-        \item candidates 27, 1, 54, 19 are assigned to course6
-        \item candidates 54, 33, 94, 64 are assigned to course7
-        \item candidates 26, 42, 64, 5 are assigned to course8
-        \item candidates 12 are assigned to course9
-    \end{itemize}
-    \subsection{Group 3: 500 candidates and 20 courses}
-    \begin{itemize}
-        \item candidates 164 are assigned to course0
-        \item candidates 387, 482, 215, 405 are assigned to course1
-        \item candidates 144, 450, 296, 479 are assigned to course2
-        \item candidates 447, 422, 379, 286 are assigned to course3
-        \item candidates 117, 125 are assigned to course4
-        \item candidates 259, 29, 499, 404 are assigned to course5
-        \item candidates 76, 177, 126 are assigned to course6
-        \item candidates 310, 16, 436 are assigned to course7
-        \item candidates 271, 425, 36, 314, 329 are assigned to course8
-        \item candidates 217 are assigned to course9
-        \item candidates 188, 49, 234 are assigned to course10
-        \item candidates 213 are assigned to course11
-        \item candidates 94, 494 are assigned to course12
-        \item candidates 312, 406, 257 are assigned to course13
-        \item candidates 161, 111, 135 are assigned to course14
-        \item candidates 486, 90, 428, 98, 382 are assigned to course15
-        \item candidates 478 are assigned to course16
-        \item candidates 33 are assigned to course17
-        \item candidates 395, 284, 365 are assigned to course18
-        \item candidates 180 are assigned to course19
-    \end{itemize}
-    \subsection{Group 4: 800 candidates and 25 courses}
-    \begin{itemize}
-        \item candidates 592, 86, 156, 769, 350 are assigned to course0
-        \item candidates 436, 784 are assigned to course1
-        \item candidates 30, 752, 493, 706 are assigned to course2
-        \item candidates 56, 623, 628, 646, 323 are assigned to course3
-        \item candidates 560, 670, 390, 57 are assigned to course4
-        \item candidates 31 are assigned to course5
-        \item candidates 336, 33, 532 are assigned to course6
-        \item candidates 731, 618 are assigned to course7
-        \item candidates 315 are assigned to course8
-        \item candidates 50, 287, 471, 213 are assigned to course9
-        \item candidates 603, 565, 168 are assigned to course10
-        \item candidates 182, 491 are assigned to course11
-        \item candidates 498, 378, 5, 760 are assigned to course12
-        \item candidates 630, 201 are assigned to course13
-        \item candidates 279 are assigned to course14
-        \item candidates 310 are assigned to course15
-        \item candidates 568 are assigned to course16
-        \item candidates 659, 16, 487 are assigned to course17
-        \item candidates 420, 531 are assigned to course18
-        \item candidates 395, 497, 588 are assigned to course19
-        \item candidates 128, 236 are assigned to course20
-        \item candidates 474 are assigned to course21
-        \item candidates 4, 87 are assigned to course22
-        \item candidates 578 are assigned to course23
-        \item candidates 533, 720 are assigned to course24
-    \end{itemize}
-    \subsection{Group 5: 1000 candidates and 30 courses}
-    \begin{itemize}
-        \item candidates 462, 207 are assigned to course0
-        \item candidates 876, 797, 908, 145 are assigned to course1
-        \item candidates 857 are assigned to course2
-        \item candidates 723 are assigned to course3
-        \item candidates 44, 459, 725, 861, 485 are assigned to course4
-        \item candidates 96, 345, 74, 496, 766 are assigned to course5
-        \item candidates 506, 935 are assigned to course6
-        \item candidates 671, 310, 809, 736, 979 are assigned to course7
-        \item candidates 321, 295 are assigned to course8
-        \item candidates 637, 594, 506 are assigned to course9
-        \item candidates 71, 994, 688 are assigned to course10
-        \item candidates 895, 717, 619, 626, 454 are assigned to course11
-        \item candidates 775, 685, 851 are assigned to course12
-        \item candidates 273, 922 are assigned to course13
-        \item candidates 436, 411 are assigned to course14
-        \item candidates 419 are assigned to course15
-        \item candidates 859, 919, 904 are assigned to course16
-        \item candidates 609, 342 are assigned to course17
-        \item candidates 111, 265, 746, 307 are assigned to course18
-        \item candidates 435, 671 are assigned to course19
-        \item candidates 348, 928, 776 are assigned to course20
-        \item candidates 189, 472 are assigned to course21
-        \item candidates 837, 73, 743 are assigned to course22
-        \item candidates 49, 976, 953 are assigned to course23
-        \item candidates 634, 834, 219 are assigned to course24
-        \item candidates 753 are assigned to course25
-        \item candidates 608 are assigned to course26
-        \item candidates 226 are assigned to course27
-        \item candidates 361, 49, 775 are assigned to course28
-        \item candidates 731, 246, 961 are assigned to course29
-    \end{itemize}
     \section{Improvements}
-    \indent In addition to stable marrige, we will develop other two methods: Maximal Matching Algorithm and Hungarian Algorithm with simulated data and make a 
-    comparison among three methods to realize their differences not only in output but also in the process of implementation and 
-    interpretation. Also, we are currently ignore candidates' GPA and past teaching experiences, which might be an important factor in decision 
-    making. 
-    \\ \indent Additionally, we are currently only focusing on teaching assistant posistions, but the real world problem includes more various teaching
+    We are currently only focusing on teaching assistant posistions, but the real world problem includes more various teaching
     positions such as graders and instructors. We would also like to consider various positions for further studies.
+    \\ \indent Currently we value course's preference to candidates and candidates' preference to courses equally likely. We will
+    test additional weights of them. This can be achieved by adjusting computation of the cost matrix in Hungarian Algorithm, and
+    changed the direction of proposing in the Stable Marriage Algorithm, and change the value of $\lambda_1$ and $\lambda_2$ in the
+    scoring function. We want to know the real-world implications if different weights are used.
     \\ \indent Another point to improve our method is to find out some other constraints to let our model fit the real world problem more. For example,
     we could add the constraints considering about the time confliction for candidate's course schedule. 
     \\ \indent In such way, I think our model could be more realistic and might be more accpetable to our community partners.
@@ -460,129 +346,5 @@ course1: candidate8, candidate2, candidate3, candidate5
     
     [4]Cs.princeton.edu, 2018. [Online]. https://www.cs.princeton.edu/~wayne/kleinberg-tardos/pdf/01StableMatching.pdf. \\
     
-    %----------------------------------------------------------------------------------------
-    %	APPENDIX
-    %----------------------------------------------------------------------------------------
-    \mbox{~}
-    \clearpage
-    \begin{appendices}
-    \setboolean{@twoside}{false}
-    \setboolean{@twocolumn}{false}
-        \begin{verbatim}
-import data_generator
-import argparse
-import pandas as pd
 
-pd.set_option('display.max_rows', 500)
-pd.set_option('display.max_columns', 500)
-pd.set_option('display.width', 1000)
-
-def run_stable_marrige(num_candidate, num_course, output):
-    data = data_generator.generate(num_candidate, num_course)
-    terminated = False
-    applied_to = dict()
-    unmatched = set()
-    for candidate in data.candidates:
-        applied_to[candidate] = set()
-        unmatched.add(candidate)
-    qualified = dict()
-    for candidate, qualification in data.qualification.items():
-        for course, score in qualification.items():
-            if score == 1:
-                courses = qualified.get(candidate, set())
-                courses.add(course)
-                qualified[candidate] = courses
-    course_list = list(data.courses)
-    current_match = dict()
-    for course in data.courses:
-        current_match[course] = list()
-    while not terminated:
-        curr_purpose = dict()
-        for candidate in unmatched:
-            courses_sorted = sorted(course_list, key = lambda x: data.candidate_preference[candidate][x], reverse = True)
-            for course in courses_sorted:
-                if course not in applied_to[candidate] and course in qualified[candidate]:
-                    applied_to[candidate].add(course)
-                    curr_purpose[candidate] = course
-                    break
-        for candidate, course in curr_purpose.items():
-            current_match[course].append(candidate)
-        new_match = dict()
-        curr_matched_candidates = set()
-        for course, candidates in current_match.items():
-            new_candidates = sorted(candidates, key = lambda x: data.course_preference[course][x], reverse = True)
-            if len(new_candidates) > data.course_capacity[course]:
-                new_candidates = new_candidates[0:data.course_capacity[course]]
-            new_match[course] = new_candidates
-            for c in new_candidates:
-                curr_matched_candidates.add(c)
-        current_match = new_match.copy()
-        for candidate in data.candidates:
-            if candidate not in curr_matched_candidates:
-                unmatched.add(candidate)
-        terminated = True
-        for candidate in unmatched:
-            if len(applied_to[candidate]) < len(qualified[candidate]):
-                terminated = False
-    write_to_file(data, current_match, output)
-
-def write_to_file(data, matching, output):
-    output_file = open(output + "", 'w')
-
-    output_file.write("candidates preference to courses:\n")
-    column_list = list(data.courses)
-    column_list.insert(0, 'candidate')
-    candidate_preference = pd.DataFrame(columns = column_list)
-    for candidate, preference in data.candidate_preference.items():
-        new_data = preference.copy()
-        for course, qualification_score in data.qualification[candidate].items():
-            if qualification_score == 0:
-                new_data[course] = "Unqualified"
-        new_data['candidate'] = candidate
-        candidate_preference = candidate_preference.append(new_data, ignore_index = True)
-    output_file.write(candidate_preference.to_string(index=False) + "\n")
-
-    output_file.write("\ncourses capacity and preference to candidates:\n")
-    column_list = list(data.candidates)
-    column_list.insert(0, 'course')
-    column_list.insert(1, 'capacity')
-    course_preference = pd.DataFrame(columns = column_list)
-    for course, preference in data.course_preference.items():
-        new_data = preference.copy()
-        for candidate in new_data.keys():
-            if data.qualification[candidate][course] == 0:
-                new_data[candidate] = "Unqualified"
-        new_data['course'] = course
-        new_data['capacity'] = data.course_capacity[course]
-        course_preference = course_preference.append(new_data, ignore_index = True)
-    output_file.write(course_preference.to_string(index=False) + "\n")
-    output_file.write("\n")
-
-    output_file.write("Final TA assignment:\n")
-    for course, TAs in matching.items():
-        new_data = dict()
-        people = ""
-        if len(TAs) == 1:
-            people = TAs[0]
-        else:
-            people = TAs[0]
-            for i in range(1, len(TAs)):
-                people += ", " + TAs[i]
-        new_data['assigned candidates'] = people
-        output_file.write(course + ": " + people + "\n")
-
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--num_candidate', type=int)
-    parser.add_argument('--num_course', type=int)
-    parser.add_argument('--output')
-    args = parser.parse_args()
-
-    run_stable_marrige(args.num_candidate, args.num_course, args.output)
-
-if __name__ == "__main__":
-    main()
-
-        \end{verbatim}
-    \end{appendices}
 \end{document}

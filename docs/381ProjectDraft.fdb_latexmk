@@ -1,6 +1,6 @@
 # Fdb version 3
-["pdflatex"] 1544347877 "/Users/weifanjiang/Documents/UW/math381/Project/AssignTA/docs/381ProjectDraft.tex" "381ProjectDraft.pdf" "381ProjectDraft" 1544347877
-  "/Users/weifanjiang/Documents/UW/math381/Project/AssignTA/docs/381ProjectDraft.tex" 1544347380 31825 1c5fe061b8c1312e85e8ee7c09f0975b ""
+["pdflatex"] 1544351593 "/Users/weifanjiang/Documents/UW/math381/Project/AssignTA/docs/381ProjectDraft.tex" "381ProjectDraft.pdf" "381ProjectDraft" 1544351594
+  "/Users/weifanjiang/Documents/UW/math381/Project/AssignTA/docs/381ProjectDraft.tex" 1544351593 22498 da1fb34d89bd9541362123253def4b94 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc" 1480098666 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1480098666 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/map/fontname/texfonts.map" 1480098670 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
@@ -132,11 +132,11 @@
   "/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1495593472 2350277 a699055bee05bf8a40b0504752487295 ""
   "/usr/local/texlive/2017/texmf-var/web2c/pdftex/pdflatex.fmt" 1495593487 4129592 0e6cfee100d68e6d96b92c0258f2ff73 ""
   "/usr/local/texlive/2017/texmf.cnf" 1495593465 577 2b71d4d888f9e5560b2e99985915a9fa ""
-  "381ProjectDraft.aux" 1544347877 2634 6c7715107c19308e8fa691039978dd45 ""
-  "381ProjectDraft.out" 1544347877 1179 5e16eb2ac4dea4c0d2f77a979d7f937b ""
-  "381ProjectDraft.tex" 1544347380 31825 1c5fe061b8c1312e85e8ee7c09f0975b ""
+  "381ProjectDraft.aux" 1544351593 2137 dd14691dc8dd1cdb2426e6a1c58ab90a ""
+  "381ProjectDraft.out" 1544351593 814 e6c9ddfd20af89b7408a22b02bf160b8 ""
+  "381ProjectDraft.tex" 1544351593 22498 da1fb34d89bd9541362123253def4b94 ""
   (generated)
-  "381ProjectDraft.log"
   "381ProjectDraft.pdf"
-  "381ProjectDraft.aux"
   "381ProjectDraft.out"
+  "381ProjectDraft.aux"
+  "381ProjectDraft.log"
