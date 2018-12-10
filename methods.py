@@ -13,7 +13,7 @@ pd.set_option('display.max_rows', 500)
 pd.set_option('display.max_columns', 500)
 pd.set_option('display.width', 1000)
 
-def run_stable_marrige(data):
+def run_stable_marriage(data):
     terminated = False
     applied_to = dict()
     unmatched = set()
@@ -176,8 +176,9 @@ def evaluate_matching(data, matching):
     score = 0
     total_matching = 0
     top_3_course = 0
-    top_3_candidate = 0
+    top_3_candidate_rate = list()
     for course, candidates in matching.items():
+        top_3_candidate = 0
         total_matching += len(candidates)
         candidate_ranking = list(data.candidates)
         candidate_ranking = sorted(candidate_ranking, key=lambda x: data.course_preference[course][x], reverse=True)
@@ -189,8 +190,9 @@ def evaluate_matching(data, matching):
                 top_3_course += 1
             if course_ranking.index(course) < 3:
                 top_3_candidate += 1
-    return round(score, 2), round(top_3_course * 100.0/total_matching, 2), round(top_3_candidate * 100.0/total_matching, 2)
-
+        top_3_candidate_rate.append(top_3_candidate * 100.0/len(candidates))
+    return round(score, 2), round(top_3_course * 100.0/total_matching, 2), \
+            round(float(sum(top_3_candidate_rate)) / max(len(top_3_candidate_rate), 1), 2)
 
 def main():
     parser = argparse.ArgumentParser()
@@ -201,12 +203,12 @@ def main():
 
     if not args.if_figure:
         data = data_generator.generate(args.num_candidate, args.num_course)
-        method = input("Method?([s]table_marrige, [h]ungarian, [m]aximum_matching): ")
+        method = input("Method?([s]table_marriage, [h]ungarian, [m]aximum_matching): ")
         output = input("Save to?(.csv): ")
         while output == '':
             output = input("Please enter a valid file name: ")
-        if method == 'stable_marrige' or 's':
-            matching = run_stable_marrige(data)
+        if method == 'stable_marriage' or 's':
+            matching = run_stable_marriage(data)
             score, course_satisfication, candidate_satisfication = evaluate_matching(data, matching)
             write_to_file(data, matching, output, score, course_satisfication, candidate_satisfication)
         elif method == 'hungarian' or 'h':
@@ -220,11 +222,9 @@ def main():
         else:
             print("haven't implemented yet")
     else:
-        n = input("Number of Simulations?: ")
-        n = int(n)
+        n = int(input("Number of Simulations?: ") or "100")
         while n < 100:
-            n = input("Try a number > 100: ")
-            n = int(n)
+            n = int(input("Try a number > 100: ") or "100")
         dir = str(args.num_candidate) + "candidates_" + str(args.num_course) + "courses_" + str(n) + "simulations"
         if not os.path.exists('figures\\' + dir):
             os.makedirs('figures\\' + dir)
@@ -233,7 +233,7 @@ def main():
         can_rate = np.zeros([n, 3])
         for i in progressbar.progressbar(range(n)):
             data = data_generator.generate(args.num_candidate, args.num_course)
-            sm = run_stable_marrige(data)
+            sm = run_stable_marriage(data)
             hg = hungarian(data)
             mm = maximum_matching(data)
             score[i, 0], prof_rate[i, 0], can_rate[i, 0] = evaluate_matching(data, sm)
