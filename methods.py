@@ -190,7 +190,7 @@ def evaluate_matching(data, matching):
                 top_3_course += 1
             if course_ranking.index(course) < 3:
                 top_3_candidate += 1
-        top_3_candidate_rate.append(top_3_candidate * 100.0/len(candidates))
+        top_3_candidate_rate.append(min(top_3_candidate * 100.0/3, 100.0))
     return round(score, 2), round(top_3_course * 100.0/total_matching, 2), \
             round(float(sum(top_3_candidate_rate)) / max(len(top_3_candidate_rate), 1), 2)
 
