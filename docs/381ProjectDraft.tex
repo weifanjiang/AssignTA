@@ -115,27 +115,19 @@
     \end{enumerate}
     %------------------------------------------------
     \section{Simplification}
-    \indent For the project draft, we simulated several groups of small-scale data and compare their results 
-    \begin{itemize}
-        \item 50 candidates with 5 courses
-        \item 100 candidates with 10 courses
-        \item 500 candidates with 20 courses
-        \item 800 candidates with 25 courses
-        \item 1000 candidates with 30 courses
-    \end{itemize}
+    In order to determine the best assignment that satisfy the above constraints, we will consider two things: what information is needed to
+    find the optimal solution, and what assumption we need to make.
     \subsection{Input}
-    \indent We simulated student candidates' following a quantified metric:
+    \indent Below are the information needed to find the optimal solution:
     \begin{itemize}
-        \item Preference for each role (grader, teaching assistant, instructor) for each course as numerical values between 0.0 and 
-        1.0 where 0.0 indicates minimal preference and 1.0 indicates maximal preference. For the project draft, we would only consider
-        teaching assistant roles at first.
+        \item Preference of candidates for each role (grader, teaching assistant, instructor) for each course as numerical values between 0.0 and 
+        1.0 where 0.0 indicates minimal preference and 1.0 indicates maximal preference.
         \item Qualification for each role for each course, which could be represented as an indicating matrix, where 1 entry indicates
         qualified for the role and 0 indicates not qualified.
+        \item Preference of courses for each candidate to each role, which should also be a numerical value between 0.0 and 1.0 (larger indicates
+        higher preference level).
+        \item Capacity for each course (number of candidates needed for each role of any course, each course may differ).
     \end{itemize}
-    We also need to have each professor’s preferences towards each candidate, which we implemented as a numerical matrix like preference
-    matrix of candidates' preference.
-    \\ As for the department’s requirements, we chose a number between $1$ and $5$ for each course that representing the required number of 
-    teaching assistants for corresponding course.     
     %------------------------------------------------
     \subsection{Assumption}
     There were some assumptions we considered about in the draft phase
@@ -146,17 +138,19 @@
         \item Candidate's time conflict with other courses they are taking is not considered.
         \item All candidates are legally registered UW students.
     \end{enumerate}
+    For this project, we will ignore the need of other roles, and only focus on teaching assistant role. 
     \section{Mathematical Model}
     Let $X = {x_1,...,x_m}$ represent $m$ student candidates, let $Y = {y_1,...,y_n}$ represent $n$ courses. \\
     Let $c_j$ represent the number of teaching assistants required for course $y_j$ for $1 \leq j \leq n$. \\
     Let $$q_{ij} = \begin{cases}1\text{, if $x_i$ is qualified to teach $y_j$} \\ 0\text{, otherwise} \end{cases}$$ \\
-    The goal is to produce a \textbf{stable assignment} of candidates to courses, represented as 
-    $$a_{ij} = \begin{cases}1\text{, if $x_i$ is assigned to $y_j$} \\ 0\text{, otherwise} \end{cases}$$, 
+    The goal is to produce an assignment of candidates to courses, which should significantly consider the preference level of courses and candidates
+    to each other. An assignment can be represented as 
+    $$a_{ij} = \begin{cases}1\text{, if $x_i$ is assigned to $y_j$} \\ 0\text{, otherwise} \end{cases}\text{,}$$ 
     subject to the following hard constraints:
     \begin{enumerate}
-        \item Each candidate must be assigned to at most one course: $$\forall x_i \in X, \sum_{j = 1}^n a_{ij} = 1$$.
-        \item Each course must be assigned an appropriate number of candidates: $$\forall y_j \in Y, \sum_{i = 1}^m a_{ij} = c_j$$.
-        \item Each candidate must be assigned only to the courses for which they are qualified: $$\forall x_j \in X,\ \forall y_j \in Y q_{ij} \geq a_{ij}$$.
+        \item Each candidate must be assigned to at most one course: $$\forall x_i \in X, \sum_{j = 1}^n a_{ij} = 1\text{.}$$
+        \item Each course must be assigned an appropriate number of candidates: $$\forall y_j \in Y, \sum_{i = 1}^m a_{ij} = c_j\text{.}$$.
+        \item Each candidate must be assigned only to the courses for which they are qualified: $$\forall x_j \in X,\ \forall y_j \in Y q_{ij} \geq a_{ij}\text{.}$$.
     \end{enumerate}
     \section{Solution of the Mathematical Problem}
     \subsection{Stable Marriage Algorithm}
@@ -202,18 +196,6 @@ RETURN: matching S
         members, and only the top $k$ ones will be kept, with $k$ being the capacity of that course.
         \item The algorithm terminates when there are no unmatched candidates or all candidates have proposed to all courses.
     \end{enumerate}
-    By using \verb|Python|, we implemented the following functionalities. 
-    By inputting a \verb|num_candidate| and a \verb|num_course| parameters, our program can:
-    \begin{enumerate}
-        \item Generate $m$ candidates and $n$ courses, which \verb|num_candidate = m| and \verb|num_course = n|.
-        \item Generate random preference levels of each candidate for courses, and each course to candidates, which are
-        floats between $0$ and $1$ inclusively.
-        \item Generate capacity for each course, which is an integer between $1$ and $5$ inclusively.
-        \item Generate qualification for each student for each course, which is an integer either $0$ or $1$, with $1$ indicates
-        being qualified.
-        \item Use the modified algorithm mentioned above to generate an assignment.
-    \end{enumerate}
-
     \subsection{Hungarian Algorithm}
     The Hungarian Algorithm is a combinatorial optimization algorithm that solves the assignment problem in polynomial time.
     It was developed and published in 1955 by Harold Kuhn, who gave "Hungarian Algorithm" its name according to the previous works
@@ -306,8 +288,8 @@ EXPAND all blossoms to obtain the
        original graph G.
 
     \end{lstlisting}
-    \section{Results}
-    \subsection{Evaluating an assignment}
+    \section{Evaluation of methods}
+    \subsection{Scoring of assignments}
     In order to compare and contrast each algorithm discussed above, we will develop a "score function", which takes input
     of a produced assignment of candidates and courses, and output a numerical score, which higher score indicates better
     quality of the assignment.\\
@@ -323,6 +305,45 @@ EXPAND all blossoms to obtain the
     All invalid assignments which breaks any of rule 1, 2, 3 at the end of section "Abstract" does not receive a score and should not be
     considered. (Theoretically, each algorithm described above should avoid generating an invalid assignment.)
 
+    \subsection{Additional Metrics}
+    In addition to sum the numerical preferences in the assignment, we also measure the percentage of courses and candidates which has their top-3
+    requests satisfied. In more detail, in an assignment, for a matched pair (a, b), which a is candidate and b is course:
+    \begin{itemize}
+        \item if a's preference score for b is within the top 3 scores of all a's preference scores, we consider b is a "top-3" choice for a. Same logic
+        applied to b when checking if a is a "top-3" choices for a.
+        \item If there are ties: suppose there are five courses: c1, c2, c3, c4, c5, and candidate a's preference score to these courses are: 0.9, 0.8, 0.8, 0.7,
+        0.6 in order, then the top 3 scores should be: 0.9, 0.8, 0.7. In this case c1, c2, c3, c4 all satisfy as "top-3" choices.
+    \end{itemize}
+    After getting the "top-3" satisfication count for both candidates and courses, we calculate the satisfiacation rate by:
+    $$\frac{\text{number of matches satisfying "top-3"}}{\text{all matches}} \times 100\%\text{,}$$
+    and "all matches" should be sum of capacity (number of TA wanted) of all courses.
+    \\ We will use both the score, and preference satisfication rate of courses and candidates, to evaluate each method, and determine the best one.
+
+    \section{Results}
+    \subsection{Simulations}
+    By using \verb|Python|, we implemented the following functionalities. 
+    By inputting a \verb|num_candidate| and a \verb|num_course| parameters, our program can:
+    \begin{enumerate}
+        \item Generate $m$ candidates and $n$ courses, which \verb|num_candidate = m| and \verb|num_course = n|.
+        \item Generate random preference levels of each candidate for courses, and each course to candidates, which are
+        floats between $0$ and $1$ inclusively.
+        \item Generate capacity for each course, which is an integer between $1$ and $5$ inclusively.
+        \item Generate qualification for each student for each course, which is an integer either $0$ or $1$, with $1$ indicates
+        being qualified.
+        \item Run the generated data on one (or all) of the three algorithms mentioned above.
+    \end{enumerate}
+    Note: for the stable-marriages method, we coded the algorithm as described in an article from Cornell University; for the Hungarian Algorithm, we
+    constructed the cost matrix as defined in section 4.2, and used the \verb|scipy.optimize.linear_sum_assignment| package which exactly
+    performs the Hungarian Algorithm; for the maximal matching algorithm, we used the \verb|networkx.max_weight_matching| package.
+    \\ For each set of random data (includes course preference, candidate preference, capacity and qualifications) generated, we will run
+    all three algorithms on it, and record the evaluations (score, preference satisfication rate for both sides) for each method.
+
+    \subsection{Simulation Result}
+
+    \section{Conclusion}
+    \indent From the output, we could draw our conclusion that our method can build an appropriate TA assignment that satisfies candidates' preferences
+    and Instructors' preferences as much as possible, while all requirements are met.
+
     \section{Improvements}
     We are currently only focusing on teaching assistant posistions, but the real world problem includes more various teaching
     positions such as graders and instructors. We would also like to consider various positions for further studies.
@@ -333,9 +354,7 @@ EXPAND all blossoms to obtain the
     \\ \indent Another point to improve our method is to find out some other constraints to let our model fit the real world problem more. For example,
     we could add the constraints considering about the time confliction for candidate's course schedule. 
     \\ \indent In such way, I think our model could be more realistic and might be more accpetable to our community partners.
-    \section{Conclusion}
-    \indent From the output, we could draw our conclusion that our method can build an appropriate TA assignment that satisfies candidates' preferences
-    and Instructors' preferences as much as possible, while all requirements are met.
+
     \section{References}
     [1]"The college admission problem: many-to-one matching : Networks II Course blog for INFO 4220", Blogs.cornell.edu, 2018. [Online]. 
     Available: https://blogs.cornell.edu/info4220/2016/03/18/the-college-admission-problem-many-to-one-matching/. \\

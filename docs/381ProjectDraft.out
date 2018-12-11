@@ -7,8 +7,12 @@
 \BOOKMARK [2][-]{subsection.4.1}{Stable Marriage Algorithm}{section.4}% 7
 \BOOKMARK [2][-]{subsection.4.2}{Hungarian Algorithm}{section.4}% 8
 \BOOKMARK [2][-]{subsection.4.3}{Maximum Matching Algorithm}{section.4}% 9
-\BOOKMARK [1][-]{section.5}{Results}{}% 10
-\BOOKMARK [2][-]{subsection.5.1}{Evaluating an assignment}{section.5}% 11
-\BOOKMARK [1][-]{section.6}{Improvements}{}% 12
-\BOOKMARK [1][-]{section.7}{Conclusion}{}% 13
-\BOOKMARK [1][-]{section.8}{References}{}% 14
+\BOOKMARK [1][-]{section.5}{Evaluation of methods}{}% 10
+\BOOKMARK [2][-]{subsection.5.1}{Scoring of assignments}{section.5}% 11
+\BOOKMARK [2][-]{subsection.5.2}{Additional Metrics}{section.5}% 12
+\BOOKMARK [1][-]{section.6}{Results}{}% 13
+\BOOKMARK [2][-]{subsection.6.1}{Simulations}{section.6}% 14
+\BOOKMARK [2][-]{subsection.6.2}{Simulation Result}{section.6}% 15
+\BOOKMARK [1][-]{section.7}{Conclusion}{}% 16
+\BOOKMARK [1][-]{section.8}{Improvements}{}% 17
+\BOOKMARK [1][-]{section.9}{References}{}% 18
