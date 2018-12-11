@@ -180,15 +180,13 @@ def evaluate_matching(data, matching):
     for course, candidates in matching.items():
         top_3_candidate = 0
         total_matching += len(candidates)
-        candidate_ranking = list(data.candidates)
-        candidate_ranking = sorted(candidate_ranking, key=lambda x: data.course_preference[course][x], reverse=True)
+        all_candidate_scores = sorted(list(set(data.course_preference[course].values())), reverse=True)
         for candidate in candidates:
             score += data.candidate_preference[candidate][course] + data.course_preference[course][candidate]
-            course_ranking = list(data.courses)
-            course_ranking = sorted(course_ranking, key=lambda x: data.candidate_preference[candidate][x], reverse=True)
-            if candidate_ranking.index(candidate) < 3:
+            all_course_scores = sorted(list(set(data.candidate_preference[candidate].values())), reverse=True)
+            if all_candidate_scores.index(data.course_preference[course][candidate]) < 3:
                 top_3_course += 1
-            if course_ranking.index(course) < 3:
+            if all_course_scores.index(data.candidate_preference[candidate][course]) < 3:
                 top_3_candidate += 1
         top_3_candidate_rate.append(min(top_3_candidate * 100.0/3, 100.0))
     return round(score, 2), round(top_3_course * 100.0/total_matching, 2), \
