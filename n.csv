@@ -1,0 +1,71 @@
+candidates preference to courses:
+candidate      course4      course2      course3      course0      course1
+ candidate0          0.4          0.7  Unqualified            0          0.8
+ candidate1  Unqualified  Unqualified  Unqualified          0.2          0.7
+ candidate2          0.7          0.3          0.2          0.9          0.9
+ candidate3  Unqualified          0.2  Unqualified  Unqualified          0.6
+ candidate4          0.2          0.3          0.8          0.4          0.1
+ candidate5          0.6          0.6          0.6          0.6          0.3
+ candidate6  Unqualified          0.5          0.4          0.2  Unqualified
+ candidate7          0.4          0.9  Unqualified          0.3          0.4
+ candidate8          0.3          0.3  Unqualified          0.6          0.5
+ candidate9          0.4          0.6          0.8            1  Unqualified
+candidate10            1  Unqualified  Unqualified  Unqualified          0.1
+candidate11          0.9          0.4  Unqualified          0.5          0.8
+candidate12          0.8          0.6          0.1          0.1          0.5
+candidate13          0.2            1  Unqualified            1            0
+candidate14          0.6          0.3          0.6          0.3          0.8
+candidate15  Unqualified          0.9          0.4          0.2            0
+candidate16          0.1          0.2  Unqualified          0.3          0.1
+candidate17            0          0.5          0.7  Unqualified          0.1
+candidate18  Unqualified          0.6          0.8          0.4          0.8
+candidate19          0.4            1          0.9  Unqualified          0.1
+candidate20  Unqualified          0.7          0.1          0.9  Unqualified
+candidate21          0.5          0.6          0.8  Unqualified  Unqualified
+candidate22  Unqualified          0.3          0.5          0.6          0.5
+candidate23          0.8          0.5          0.7  Unqualified  Unqualified
+candidate24          0.8          0.3          0.6  Unqualified          0.8
+candidate25          0.9          0.3          0.3          0.2          0.7
+candidate26          0.1          0.3  Unqualified          0.5          0.9
+candidate27            0          0.5  Unqualified          0.5          0.8
+candidate28          0.9  Unqualified          0.3          0.9          0.9
+candidate29          0.6          0.3          0.5          0.6          0.8
+candidate30          0.5          0.2          0.9          0.3          0.3
+candidate31          0.4          0.3          0.7          0.7          0.4
+candidate32  Unqualified          0.1          0.1          0.1          0.2
+candidate33          0.1          0.1  Unqualified          0.3  Unqualified
+candidate34  Unqualified          0.9          0.1  Unqualified          0.7
+candidate35  Unqualified  Unqualified  Unqualified          0.9          0.8
+candidate36          0.6          0.3          0.8          0.3          0.4
+candidate37          0.5          0.8          0.6  Unqualified  Unqualified
+candidate38          0.2          0.9  Unqualified          0.6  Unqualified
+candidate39          0.9  Unqualified          0.8  Unqualified          0.8
+candidate40          0.5          0.7          0.5          0.6          0.6
+candidate41          0.7            0          0.4          0.7  Unqualified
+candidate42          0.1          0.7          0.7          0.6          0.7
+candidate43          0.1          0.2          0.3          0.4  Unqualified
+candidate44  Unqualified          0.5          0.7          0.5          0.8
+candidate45          0.5          0.1          0.4  Unqualified            0
+candidate46          0.7          0.5            0          0.7          0.6
+candidate47          0.8          0.4          0.2  Unqualified          0.2
+candidate48          0.2          0.3  Unqualified          0.5          0.8
+candidate49          0.6          0.2          0.5          0.2  Unqualified
+
+courses capacity and preference to candidates:
+course capacity  candidate2   candidate8  candidate49  candidate17  candidate15  candidate5  candidate20  candidate4  candidate13   candidate0  candidate43  candidate45  candidate11  candidate41  candidate22  candidate23  candidate35  candidate14  candidate47  candidate36  candidate30  candidate39   candidate3  candidate24  candidate18  candidate27  candidate28   candidate9   candidate7  candidate31  candidate38  candidate42  candidate46  candidate37  candidate40  candidate32  candidate10  candidate16  candidate29  candidate34  candidate25  candidate19  candidate26  candidate12   candidate6  candidate21   candidate1  candidate44  candidate48  candidate33
+course0        1         0.1          0.2          0.9  Unqualified            0         0.0          0.2         0.2          0.4          0.1          0.5  Unqualified          0.9          0.6          0.5  Unqualified          0.9          0.5  Unqualified          0.2          1.0  Unqualified  Unqualified  Unqualified          0.1          0.7          0.3          0.2          0.1          0.5          0.1          0.9          0.6  Unqualified          0.5          0.8  Unqualified          0.3          0.7  Unqualified          0.8  Unqualified          0.9          0.9          0.7  Unqualified          0.1          0.2          0.6          0.1
+course1        5         0.4          0.2  Unqualified          0.7          0.3         0.4  Unqualified         0.2          0.7          0.1  Unqualified          0.8          0.6  Unqualified          0.8  Unqualified          0.9          0.6          0.5          0.2          0.7          0.6          0.8            1          0.8          0.2          0.9  Unqualified          0.4          0.5  Unqualified          0.7          0.5  Unqualified          0.2          0.1            0          0.4          0.8          0.2          0.6          0.1          0.6          0.4  Unqualified  Unqualified            1          0.4          0.8  Unqualified
+course2        5         1.0          0.8          0.1          0.7          0.9         0.7          0.2         0.5          0.1          0.3          0.9          0.8          0.2          0.4          0.3          0.1  Unqualified          0.6          0.8          0.5          0.6  Unqualified          0.5          0.9          0.4            1  Unqualified          0.4          0.5          0.6          0.7          1.0          0.5          0.2          0.1          0.4  Unqualified          0.5          0.5          0.9          0.3          0.8          0.3          0.1          0.1          0.2  Unqualified          0.1          0.7          0.1
+course3        2         0.2  Unqualified          0.8            0          0.1         0.1            1         0.1  Unqualified  Unqualified          0.7          0.8  Unqualified          0.3          0.6          0.2  Unqualified          0.4          0.5          0.8          0.7          0.6  Unqualified            1          0.4  Unqualified          0.5          0.2  Unqualified          0.7  Unqualified          0.7          0.7          0.7          0.1          0.5  Unqualified  Unqualified          0.0          0.8          0.2          0.8  Unqualified          0.0            0          0.6  Unqualified          0.5  Unqualified  Unqualified
+course4        4         0.4          0.1          0.8          0.7  Unqualified         0.1  Unqualified         0.6          0.2          0.6          0.6          0.2          0.4          0.2  Unqualified          0.7  Unqualified          0.2          0.4          0.0          0.8          0.1  Unqualified          0.9  Unqualified          0.5          0.3          0.7          0.7          0.0          0.3          0.9          0.9          0.8          0.6  Unqualified          0.8          0.3          0.9  Unqualified          0.7          0.5          0.7          0.7  Unqualified          0.8  Unqualified  Unqualified          0.1          0.1
+
+Final TA assignment:
+course4:,candidate24, candidate46, candidate49, candidate10
+course2:,candidate42, candidate27, candidate2, candidate15, candidate34
+course3:,candidate20, candidate36
+course0:,candidate30
+course1:,candidate1, candidate28, candidate35, candidate3, candidate29
+
+Score for assignment: 26.8
+Percentage of courses get top 3 choice of candidates: 100.0
+Percentage of candidates get top 3 choice of courses: 73.33

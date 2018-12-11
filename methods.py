@@ -27,6 +27,9 @@ def run_stable_marriage(data):
                 courses = qualified.get(candidate, set())
                 courses.add(course)
                 qualified[candidate] = courses
+            else:
+                courses = qualified.get(candidate, set())
+                qualified[candidate] = courses
     course_list = list(data.courses)
     current_match = dict()
     for course in data.courses:
@@ -175,10 +178,9 @@ def write_to_file(data, matching, output, score, course_satisfication, candidate
 def evaluate_matching(data, matching):
     score = 0
     total_matching = 0
+    top_3_candidate = 0
     top_3_course = 0
-    top_3_candidate_rate = list()
     for course, candidates in matching.items():
-        top_3_candidate = 0
         total_matching += len(candidates)
         all_candidate_scores = sorted(list(set(data.course_preference[course].values())), reverse=True)
         for candidate in candidates:
@@ -188,9 +190,8 @@ def evaluate_matching(data, matching):
                 top_3_course += 1
             if all_course_scores.index(data.candidate_preference[candidate][course]) < 3:
                 top_3_candidate += 1
-        top_3_candidate_rate.append(min(top_3_candidate * 100.0/3, 100.0))
-    return round(score, 2), round(top_3_course * 100.0/total_matching, 2), \
-            round(float(sum(top_3_candidate_rate)) / max(len(top_3_candidate_rate), 1), 2)
+    return round(score, 2), round(top_3_course * 100.0/total_matching, 2),\
+        round(top_3_candidate * 100.0/total_matching, 2)
 
 def main():
     parser = argparse.ArgumentParser()
