@@ -486,7 +486,7 @@ EXPAND all blossoms to obtain the
     \\\indent Moreover, with the current input and evaluation method, Hungarian Algorithm and Maximum Matching will both have optimized score
     with the exact same value. On the other hand, the assignment score computed using Stable Marriage Algorithm is slightly less than the score
     retrieved from the other two methods but not far below.
-    \\\indent Also, it is necessary to consider the runtime 
+    \\\indent Also, it is necessary to consider the runtime.
     %------------------------------------------------
     \section{Improvements}
     We are currently only focusing on teaching assistant posistions, but the real world problem includes more various teaching
@@ -500,10 +500,15 @@ EXPAND all blossoms to obtain the
     \end{itemize}
     We want to know the real-world implications if different weights are used.
     \\ \indent Another point to improve our method is to find out some other constraints to let our model fit the real world problem more. For example,
-    we would like to construct quantification inputs instead of "qualified" or "not-qualified".
+    we would like to construct quantification inputs instead of "qualified" or "not-qualified". Past teaching experience and English proficiency level
+    should also contribute to a candidate's chance of being selected.
     \\ \indent Besides, if our community partners are willing to take our suggestion by chance, we would modify our input method from
     randomly generating to construct our data map using given input data such as comma-seperated-value files (.csv) and 
     SQL or NoSQL tables.
+    \\ \indent And most importantly, our analyzation of results is based on randomly generated data (such as each candidate's preference score is
+    generated uniformly between 0.0 to 1.0). In real world, the actual distribution of preference scores may not be uniformly distributed. The course
+    capacities also may not necessarily be uniformly distributed between 1 and 5. If we can get real-world data, we can generate more real-world like
+    data distributions. It will be better if we can perform our model on the past data from one quarter, and compare our result with the actual assignment.
     \\ \indent In such way, I think our model could be more realistic and might be more accpetable to our community partners.
     %------------------------------------------------
     \section{References}
@@ -515,6 +520,8 @@ EXPAND all blossoms to obtain the
     [3]"Stable Marriage Problem -- from Wolfram MathWorld", Mathworld.wolfram.com, 2018. http://mathworld.wolfram.com/StableMarriageProblem.html. \\
     
     [4]Cs.princeton.edu, 2018. [Online]. https://www.cs.princeton.edu/~wayne/kleinberg-tardos/pdf/01StableMatching.pdf. \\
+
+    [5]Winston, Wayne L. Operations Research: Applications and Algorithms. Brooks/Cole, Cengage Learning, 2009.
     
 
 \end{document}
