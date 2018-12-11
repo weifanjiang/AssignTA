@@ -1,0 +1,37 @@
+candidates preference to courses:
+candidate      course1      course0      course2
+ candidate0  Unqualified          0.1  Unqualified
+ candidate1  Unqualified          0.5  Unqualified
+ candidate2          0.7  Unqualified          0.8
+ candidate3          0.2          0.5            0
+ candidate4  Unqualified          0.5          0.9
+ candidate5          0.6          0.3          0.7
+ candidate6          0.4          0.3  Unqualified
+ candidate7          0.1          0.5          0.9
+ candidate8          0.3          0.2          0.7
+ candidate9          0.8          0.9          0.4
+candidate10          0.6          0.5          0.5
+candidate11          0.1          0.9          0.8
+candidate12          0.2          0.4          0.2
+candidate13          0.3          0.4          0.8
+candidate14          0.2  Unqualified          0.1
+candidate15          0.3  Unqualified  Unqualified
+candidate16  Unqualified          0.9          0.4
+candidate17            1          0.8          0.7
+candidate18  Unqualified            1          0.4
+candidate19  Unqualified          0.6          0.3
+
+courses capacity and preference to candidates:
+course capacity  candidate16  candidate17  candidate3  candidate7  candidate9  candidate12  candidate13  candidate19  candidate5  candidate15   candidate2   candidate6  candidate8  candidate11  candidate14  candidate10   candidate1   candidate4   candidate0  candidate18
+course0        1          0.2          0.7         0.4         0.7         0.7          0.7          0.1          0.3         0.0  Unqualified  Unqualified          0.8         0.2          0.8  Unqualified          0.2          0.6          0.8          0.3          0.2
+course1        5  Unqualified          0.8         0.3         0.7         0.1          0.4          0.8  Unqualified         0.8          0.3          0.9            1         0.4          0.8          0.6          0.0  Unqualified  Unqualified  Unqualified  Unqualified
+course2        5          0.3          0.7         0.4         0.1         0.9          0.5          0.0          0.8         0.0  Unqualified          0.5  Unqualified         0.4          0.0          0.7          0.8  Unqualified          0.9  Unqualified            1
+
+Final TA assignment:
+course2:,candidate10, candidate9, candidate18, candidate19, candidate4
+course1:,candidate6, candidate17, candidate5, candidate13, candidate2
+course0:,candidate11
+
+Score for assignment: 15.9
+Percentage of courses get top 3 choice of candidates: 100.0
+Percentage of candidates get top 3 choice of courses: 100.0

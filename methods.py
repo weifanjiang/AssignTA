@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import time
 import progressbar
 import os
+from pathlib import Path
 
 pd.set_option('display.max_rows', 500)
 pd.set_option('display.max_columns', 500)
@@ -197,14 +198,12 @@ def main():
     parser.add_argument('--num_candidate', type=int)
     parser.add_argument('--num_course', type=int)
     parser.add_argument('--if_figure', type=bool, default=False)
+    parser.add_argument('--save_to', type=str, default='result/trail')
+    parser.add_argument('--num_simulations', type=int, default=100)
     args = parser.parse_args()
-
     if not args.if_figure:
         data = data_generator.generate(args.num_candidate, args.num_course)
-        output = input('Save to?(.csv): ')
-        output_file_name = output.split('.')[0]
-        while output == '':
-            output = input('Please enter a valid file name: ')
+        output_file_name = args.save_to.split('.')[0]
         matching_sm = run_stable_marriage(data)
         score, course_satisfaction, candidate_satisfaction = evaluate_matching(data, matching_sm)
         write_to_file(data, matching_sm, output_file_name+'_sm.csv', score, course_satisfaction, candidate_satisfaction)
@@ -215,12 +214,12 @@ def main():
         score, course_satisfaction, candidate_satisfaction = evaluate_matching(data, matching_mm)
         write_to_file(data, matching_mm, output_file_name+'_mm.csv', score, course_satisfaction, candidate_satisfaction)
     else:
-        n = int(input('Number of Simulations?: ') or '100')
+        n = args.num_simulations
+        dir = str(args.num_candidate) + 'candidates_' + str(args.num_course) + 'courses_' + str(n) + 'simulations'
         while n < 100:
             n = int(input('Try a number > 100: ') or '100')
-        dir = str(args.num_candidate) + 'candidates_' + str(args.num_course) + 'courses_' + str(n) + 'simulations'
-        if not os.path.exists('figures\\' + dir):
-            os.makedirs('figures\\' + dir)
+        if not Path('./figures/'+dir).exists():
+            Path('./figures/'+dir).mkdir(parents=True)
         score = np.zeros([n, 3])
         prof_rate = np.zeros([n, 3])
         can_rate = np.zeros([n, 3])
@@ -244,7 +243,7 @@ def main():
                     label='Mean of Maximum Matching={0:.{1}f}'.format(sum(score[:,2])/n,2), color='orange')
         plt.title('Score, Monte Carlo n ={}'.format(n))
         plt.legend()
-        plt.savefig('figures\\'+dir+'\scores.png')
+        plt.savefig(Path('./figures/'+dir+'/scores.png'))
         plt.figure(2)
         plt.hist(prof_rate[:,0], bins=10, label='Stable Marriage', alpha=0.6, color='c')
         plt.axvline(sum(prof_rate[:,0])/n, linestyle='--', \
@@ -257,7 +256,7 @@ def main():
                     label='Mean of Maximum Matching={0:.{1}f}'.format(sum(prof_rate[:,2])/n,2), color='orange')
         plt.title('Professors satisfaction rate, Monte Carlo n ={}'.format(n))
         plt.legend()
-        plt.savefig('figures\\'+dir+'\prof_rate.png')
+        plt.savefig(Path('./figures/'+dir+'/prof_rate.png'))
         plt.figure(3)
         plt.hist(can_rate[:,0], bins=10, label='Stable Marriage', alpha=0.6, color='c')
         plt.axvline(sum(can_rate[:,0])/n, linestyle='--', \
@@ -270,7 +269,7 @@ def main():
                     label='Mean of Maximum Matching={0:.{1}f}'.format(sum(can_rate[:,2])/n,2), color='orange')
         plt.title('Candidates satisfaction rate, Monte Carlo n ={}'.format(n))
         plt.legend()
-        plt.savefig('figures\\'+dir+'\can_rate.png')
+        plt.savefig(Path('./figures/'+dir+'/can_rate.png'))
 
 
 

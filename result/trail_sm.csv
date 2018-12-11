@@ -1,0 +1,27 @@
+candidates preference to courses:
+candidate      course2      course0  course1
+candidate0          0.5          0.4      0.1
+candidate1          0.3          0.4      1.0
+candidate2          0.4          0.1      0.7
+candidate3            1          0.8      0.6
+candidate4          0.9          0.4      0.5
+candidate5          0.3          0.8      0.9
+candidate6  Unqualified          0.1      0.4
+candidate7          0.3  Unqualified      0.9
+candidate8          0.5            0      0.4
+candidate9          0.1          0.7      0.2
+
+courses capacity and preference to candidates:
+course capacity  candidate9  candidate5  candidate1  candidate2  candidate8  candidate0  candidate3   candidate7   candidate6  candidate4
+course0        4         0.1         0.0         0.2         0.8         0.2         0.4         0.2  Unqualified          0.8         0.8
+course1        1         0.9         0.5         0.5         0.1         0.2         0.7         0.4          0.6            0         0.8
+course2        4         0.6         0.1         0.5         0.7         0.1         0.3         0.6          0.6  Unqualified         0.3
+
+Final TA assignment:
+course2:,candidate2, candidate3, candidate0, candidate4
+course0:,candidate6, candidate1, candidate8, candidate9
+course1:,candidate7
+
+Score for assignment: 8.7
+Percentage of courses get top 3 choice of candidates: 55.56
+Percentage of candidates get top 3 choice of courses: 100.0

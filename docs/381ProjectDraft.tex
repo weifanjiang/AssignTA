@@ -383,6 +383,48 @@ EXPAND all blossoms to obtain the
     all three algorithms on it, and record the evaluations (score, preference satisfaction rate for both sides) for each method.
 
     \subsection{Simulation Result}
+    \begin{table}[t]
+        \centering
+        \begin{tabular}{|l|l|l|l|}
+        \hline
+        Candidate   & Course 2    & Course 0    & Course 1 \\ \hline
+        Candidate 0 & 0.5         & 0.4         & 0.1      \\ \hline
+        Candidate 1 & 0.3         & 0.4         & 1.0      \\ \hline
+        Candidate 2 & 0.4         & 0.1         & 0.7      \\ \hline
+        Candidate 3 & 1           & 0.8         & 0.6      \\ \hline
+        Candidate 4 & 0.9         & 0.4         & 0.5      \\ \hline
+        Candidate 5 & 0.3         & 0.8         & 0.9      \\ \hline
+        Candidate 6 & - & 0.1         & 0.4      \\ \hline
+        Candidate 7 & 0.3         & - & 0.9      \\ \hline
+        Candidate 8 & 0.5         & 0           & 0.4      \\ \hline
+        Candidate 9 & 0.1         & 0.7         & 0.2      \\ \hline
+        \end{tabular}
+        \caption{Sample Input Data for Candidates' Preference with Qualification, - indicates unqualified}
+    \end{table}
+    \begin{table}[t]
+        \centering
+        \begin{tabular}{|l|l|l|l|}
+        \hline
+        Course   & Capacity & Candidate 9 & $\cdots$ \\ \hline
+        Course 0 & 4        & 0.1         & $\cdots$ \\ \hline
+        Course 1 & 1        & 0.9         & $\cdots$ \\ \hline
+        Course 2 & 4        & 0.6         & $\cdots$ \\ \hline
+        \end{tabular}
+        \caption{Sample Input Data for Professors' Preference with Course Capacity}
+    \end{table}
+    \begin{table*}[t]
+        \centering
+        \begin{tabular}{|l|l|l|l|l|}
+        \hline
+        course2:      & candidate2     & candidate0     & candidate3     & candidate7     \\ \hline
+        course0:      & candidate9     & candidate5     & candidate6     & candidate4     \\ \hline
+        course1:      & \multicolumn{4}{l|}{candidate1}                                   \\ \hline
+        \multicolumn{5}{|l|}{Score for assignment: 9.6}                                   \\ \hline
+        \multicolumn{5}{|l|}{Percentage of courses get top 3 choice of candidates: 55.56} \\ \hline
+        \multicolumn{5}{|l|}{Percentage of candidates get top 3 choice of courses: 100.0} \\ \hline
+        \end{tabular}
+        \caption{Sample Output Assignment using Maximum Matching with Sample Evaluation}
+    \end{table*}
     We first start with a small sample size (50 student candidates and 5 courses) to be assigned. From Figure \ref{fig:50can_5cou}, we can see that Hungarian Algorithm and
     Maximum Matching Algorithm perform extremely well on assigning candidates to one of their top 3 choices with a mean satisfaction rate of $\approx 99.5\%$. Stable Marriage
     Algorithm is also accpetable with a mean of $80.58\%$ satisfaction rate. Considering the professors' satisfaction rate, Stable Marriage give us the best result with
@@ -486,7 +528,11 @@ EXPAND all blossoms to obtain the
     \\\indent Moreover, with the current input and evaluation method, Hungarian Algorithm and Maximum Matching will both have optimized score
     with the exact same value. On the other hand, the assignment score computed using Stable Marriage Algorithm is slightly less than the score
     retrieved from the other two methods but not far below.
-    \\\indent Also, it is necessary to consider the runtime.
+    \\\indent Also, it is necessary to consider the runtime. From our tested trails, we found that in general, Maximum Matching Algorithm
+    always finshed up with the least runtime. Therefore, consider all factors we are interested in, we would like to give our suggestion that
+    if our community partners are looking for an algorithm which could both consider the preferneces of professors and student candidates equally
+    and can perform stably even with large data set with less runtime, we would like to suggest the Maximum Matching Algorithm we have developed
+    in this paper.
     %------------------------------------------------
     \section{Improvements}
     We are currently only focusing on teaching assistant posistions, but the real world problem includes more various teaching
