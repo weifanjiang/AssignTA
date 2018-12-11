@@ -17,6 +17,7 @@
     \usepackage{listings}
     \usepackage{spverbatim}
     \usepackage[title]{appendix}
+    \usepackage{subcaption}
     \hypersetup{
         colorlinks=true,
         linkcolor=blue,
@@ -27,6 +28,13 @@
         basicstyle=\ttfamily,
         frame=single
     }
+    % Keywords
+    \providecommand{\keywords}[1]
+    {
+        \small
+        \textbf{\textit{Keywords---}} #1
+    }
+
     \urlstyle{same}
     \setlength{\parindent}{18pt}
     \setlist[itemize]{noitemsep} % Make itemize lists more compact
@@ -41,25 +49,29 @@
     
     \author{ \parbox{3 in}{\centering Chongyi Xu, Weifan Jiang \\
              University of Washington\\
-             MATH 381 Project Draft\\
+             MATH 381\\
              {\tt\small chongyix@uw.edu}\\{\tt\small wfjiang@uw.edu}}
     }
 
     \begin{document}
-    \maketitle
-
+    \twocolumn[
+        \maketitle
+        \begin{@twocolumnfalse}
+            \begin{abstract}
+                For this project, we are focusing on developing a method to assign teaching-assistant candidates
+                to different courses. Assigning candidates to their preferred teaching positions is important to 
+                course coordinators at UW for a long time. Our purpose is to recommend a method of teaching-assistant
+                assignments to solve this problem. We used simulated data to compare different methods that 
+                we would use in the project. View \href{url}{https://github.com/weifanjiang/AssignTA} for our repository.
+            \end{abstract}
+            \keywords{Mathematical Model; Algorithm; Maximum Matching; Hungarian; Stable Marriage}
+            \par\noindent\rule{\textwidth}{0.4pt}
+        \end{@twocolumnfalse}
+    ]
     %----------------------------------------------------------------------------------------
     %	ARTICLE CONTENTS
     %----------------------------------------------------------------------------------------
-    \begin{abstract}
 
-    \indent For this project, we are focusing on developing a method to assign teaching-assistant candidates
-    to different courses. Assigning candidates to their preferred teaching positions is important to 
-    course coordinators at UW for a long time. Our purpose is to recommend a method of teaching-assistant
-    assignments to solve this problem. We used simulated data to compare different methods that 
-    we would use in the project.
-        
-    \end{abstract}
 
     \linespread{1.05} % Line spacing - Palatino needs more space between lines
     %------------------------------------------------
@@ -132,13 +144,17 @@
     \subsection{Assumption}
     There were some assumptions we considered about in the draft phase
     \begin{enumerate}
-        \item The quantifications of candidates who are applying for the same course were the same. In the other word, we would not take
-        account into candidates' past teaching experiences, as well as their GPA when they took that course at this time.
+        \item The quantifications were interpreted as qualifications. In other words, we would consider candidates' teaching experiences and GPA 
+        as components of qualifications instead of quantifications. For instance, a no-teaching-experience candidate with GPA 
+        less than $3.7$ would not consider to be qualified for the course he or she was applying for.
         \item Student candidates do not care about any factors other than their preferences, such as payment and work time.
-        \item Candidate's time conflict with other courses they are taking is not considered.
+        \item Candidate's time conflict with other courses they are taking is considered within qualifications.
+        \item Student candidates will apply to all courses that they are qualified for. For those they are not interested in, they will give a 
+        low preference.
         \item All candidates are legally registered UW students.
     \end{enumerate}
     For this project, we will ignore the need of other roles, and only focus on teaching assistant role. 
+    %------------------------------------------------
     \section{Mathematical Model}
     Let $X = {x_1,...,x_m}$ represent $m$ student candidates, let $Y = {y_1,...,y_n}$ represent $n$ courses. \\
     Let $c_j$ represent the number of teaching assistants required for course $y_j$ for $1 \leq j \leq n$. \\
@@ -149,9 +165,10 @@
     subject to the following hard constraints:
     \begin{enumerate}
         \item Each candidate must be assigned to at most one course: $$\forall x_i \in X, \sum_{j = 1}^n a_{ij} = 1\text{.}$$
-        \item Each course must be assigned an appropriate number of candidates: $$\forall y_j \in Y, \sum_{i = 1}^m a_{ij} = c_j\text{.}$$.
-        \item Each candidate must be assigned only to the courses for which they are qualified: $$\forall x_j \in X,\ \forall y_j \in Y q_{ij} \geq a_{ij}\text{.}$$.
+        \item Each course must be assigned an appropriate number of candidates: $$\forall y_j \in Y, \sum_{i = 1}^m a_{ij} = c_j\text{.}$$
+        \item Each candidate must be assigned only to the courses for which they are qualified: $$\forall x_j \in X,\ q_{ij} \geq a_{ij} \forall y_j \in Y\text{.}$$
     \end{enumerate}
+    %------------------------------------------------
     \section{Solution of the Mathematical Problem}
     \subsection{Stable Marriage Algorithm}
     \indent In the field of computer science and mathematics, the stable match problem or stable marraige problem states that given N men and N women, 
@@ -250,7 +267,7 @@ ELSE:
     Formally, $M\notin M^{'}$ for any matching $M^{'}$ of $G$. Intuitively, this is equivalent to saying that a matching is maximal 
     if we cannot add any edge to the existing set. And a matching $M$ is said to be Maximum if for any other matching $M^{'}$, 
     $|M|\geq |M^{'}|$. Generally, maximum matching applied to unweighted graph more but for this project,
-    we would like to modify the algorithm with weights in order to meet our propose. With researching, we decided to implement the method
+    we would like to modify the algorithm with weights in order to meet our propose. With researching, we will implement the method
     introduced by \textit{Zvi Galil}, Department of Computer Science, Columbia University, in 1986. In his study "Efficient Algorithms
     for Maximum Matching in Graphs", he developed this method based on Berge's Theorem, "the matching M has maximum cardinality if and 
     only if there is no augmenting path with respect to M."
@@ -288,6 +305,33 @@ EXPAND all blossoms to obtain the
        original graph G.
 
     \end{lstlisting}
+    
+    In order to fit Maximum Matching algorithm to our model, we decide to construct a bipartite graph utilizing the data 
+    we are working with. The first group of vertices will be implemented as distinct candidates, say, candidate group. 
+    And the other group of vertices will be the courses we are assigning to, say, course group. Meanwhile, it has to be 
+    considered that for each course in the course group, there is a required number of candidates they are looking for. 
+    So we will modify our construction as the following:
+    \begin{itemize}
+        \item For each course $y_j \in Y$ in the course group, get the required number of candidates $c_j$.
+        \item Construct a vertexc representing course $y_j$. And then make $c_j$ copies of the same vertex denoted as $y_j^k$.
+        $1\leq k\leq c_j$.
+        \item For each candidate $x_i\in X$, connect $x_i$ with all $y_j^k$ for which $x_i$ is qualified for.
+        \item Weight the edge with a preference score $s = \lambda_1 p_{ij} + \lambda_2 p_{ji}$, where $\lambda_1=$ the weight of 
+        candidates' preferences, $p_{ij}=$ candidate $x_i$'s preference to course $y_j$, $\lambda_2=$ the weight of 
+        courses' preferences, $p_{ji}=$ course $y_j$'s preference to candidate $x_i$.  And for most cases, we are weighting
+        courses' preferences and candidates' preferences equally. In the other word, $\lambda_1=\lambda_2=1$.
+    \end{itemize}
+    \textbf{Note:} When we say "courses' preferences", we are basically indicating the list submit by the professor(or instructor) 
+    teaching that course, ranking his or her preferences to the candidates who are applying for that course.
+    \begin{figure*}
+        \centering
+        \includegraphics[width=0.5\textwidth]{MM.png}
+        \caption{A sample graph including 5 candidates and 3 courses, where the $y_1$ is looking for 2 candidates, $y_2$ is looking for
+        only 1 candidate, and $y_3$ also needs 2 candidates. The edge weights are the linear combination of candidate-to-course preferences and
+        course-to-candidate preferences with a maximum of $\lambda_1+\lambda_2$. If not specified, $\lambda_1+\lambda_2=2$ in general. Red lines
+        indicate the best assignment generated by Maximum Matching Algorithm.}
+    \end{figure*}
+    %------------------------------------------------
     \section{Evaluation of methods}
     \subsection{Scoring of assignments}
     In order to compare and contrast each algorithm discussed above, we will develop a "score function", which takes input
@@ -302,7 +346,7 @@ EXPAND all blossoms to obtain the
     $$\sum_i\sum_j \sigma_{i,j}(\lambda_1m_{i,j} + \lambda_2n_{j,i})$$.
     Which $\lambda_1$ and $\lambda_2$ are different weights we consider course's and candidates's preferences to the other. Currently,
     we use $1$ for both weights to value candidates and courses' opinions equally when scoring an assignment.
-    All invalid assignments which breaks any of rule 1, 2, 3 at the end of section "Abstract" does not receive a score and should not be
+    All invalid assignments which breaks any of rule 1, 2, 3 in the problem description will not receive a score and should not be
     considered. (Theoretically, each algorithm described above should avoid generating an invalid assignment.)
 
     \subsection{Additional Metrics}
@@ -314,11 +358,11 @@ EXPAND all blossoms to obtain the
         \item If there are ties: suppose there are five courses: c1, c2, c3, c4, c5, and candidate a's preference score to these courses are: 0.9, 0.8, 0.8, 0.7,
         0.6 in order, then the top 3 scores should be: 0.9, 0.8, 0.7. In this case c1, c2, c3, c4 all satisfy as "top-3" choices.
     \end{itemize}
-    After getting the "top-3" satisfication count for both candidates and courses, we calculate the satisfiacation rate by:
+    After getting the "top-3" satisfaction count for both candidates and courses, we calculate the satisfaction rate by:
     $$\frac{\text{number of matches satisfying "top-3"}}{\text{all matches}} \times 100\%\text{,}$$
-    and "all matches" should be sum of capacity (number of TA wanted) of all courses.
-    \\ We will use both the score, and preference satisfication rate of courses and candidates, to evaluate each method, and determine the best one.
-
+    and "all matches" should be sum of capacity (number of candidates wanted) of all courses.
+    \\ We will use both the score, and preference satisfaction rate of courses and candidates, to evaluate each method, and determine the best one.
+    %------------------------------------------------
     \section{Results}
     \subsection{Simulations}
     By using \verb|Python|, we implemented the following functionalities. 
@@ -336,25 +380,132 @@ EXPAND all blossoms to obtain the
     constructed the cost matrix as defined in section 4.2, and used the \verb|scipy.optimize.linear_sum_assignment| package which exactly
     performs the Hungarian Algorithm; for the maximal matching algorithm, we used the \verb|networkx.max_weight_matching| package.
     \\ For each set of random data (includes course preference, candidate preference, capacity and qualifications) generated, we will run
-    all three algorithms on it, and record the evaluations (score, preference satisfication rate for both sides) for each method.
+    all three algorithms on it, and record the evaluations (score, preference satisfaction rate for both sides) for each method.
 
     \subsection{Simulation Result}
+    We first start with a small sample size (50 student candidates and 5 courses) to be assigned. From Figure \ref{fig:50can_5cou}, we can see that Hungarian Algorithm and
+    Maximum Matching Algorithm perform extremely well on assigning candidates to one of their top 3 choices with a mean satisfaction rate of $\approx 99.5\%$. Stable Marriage
+    Algorithm is also accpetable with a mean of $80.58\%$ satisfaction rate. Considering the professors' satisfaction rate, Stable Marriage give us the best result with
+    a mean of $99.49\%$ satisfaction. And Hungarian Algorithm produced assignment with an average of $\approx 81\%$ top-3 satisfied to professors, as well as Maximum Matching
+    Algorithm. And for the histogram of score, we can see an interesting phenomenon that the distributions of Hungarian Algorithm and Maximum Matching Algorithm are
+    exactly the same. Is that an edge case due to small sample size? We then run the simulations with a larger size (200 candidates and 15 courses).
+    \\ \indent From Figure \ref{fig:200can_15cou}, we can see that the distribution of satisfaction rates becomes more dense, which is reasonable because that with
+    larger data set, the model we built should have a better stability. And it is surprising that Hungarian Algorithm and Maximum Matching Algorithm perform better on 
+    satisfying professors' preferences. However, the candidate satisfaction rate evalutaed from Stable Marriage Algorithm is worse than the rate we got from smaller candidate-course
+    size. Furthermore, we find that the score distributions of Hungarian Algorithm and Maximum Matching Algorithm are still the same.
+    \\ \indent Finally, we tested our model using relatively realistic sizes of candidates and courses (300 candidates 50 courses). We can see that Stable Marriage Algorithm
+    gets a lower satisfaction rate for candidates to around $60\%$, which is not ideal. However, the other two algorithms still give back a high-stand performance that we 
+    are looking for. And considering professors' preferences, all three algorithms have $100\%$ satisfaction rate. Our algorithms really make professors happy! Focusing on the 
+    distribution, Stable Marriage Algorithm has a more densed distribution that is close to $100\%$ rather than other two. In fact, Maximum Matching Algorithm also lies on 
+    $100\%$ satisfaction rate for professors for approximately 80 trails over 100 trails of simulation. 
 
+
+    \begin{figure*}[t]
+        \centering
+        \begin{subfigure}{0.32\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../figures/50candidates_5courses_100simulations/can_rate.png}
+            \caption{Candidate Satisfaction Rate}
+        \end{subfigure}%
+        ~
+        \begin{subfigure}{0.32\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../figures/50candidates_5courses_100simulations/prof_rate.png}
+            \caption{Professor Satisfaction Rate}
+        \end{subfigure}
+        ~
+        \begin{subfigure}{0.32\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../figures/50candidates_5courses_100simulations/scores.png}
+            \caption{Score}
+        \end{subfigure}
+        \caption{Histograms with 50 candidates and 5 courses}
+        \label{fig:50can_5cou}
+    \end{figure*}
+
+    \begin{figure*}[t]
+        \centering
+        \begin{subfigure}{0.32\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../figures/200candidates_15courses_100simulations/can_rate.png}
+            \caption{Candidate Satisfaction Rate}
+        \end{subfigure}%
+        ~
+        \begin{subfigure}{0.32\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../figures/200candidates_15courses_100simulations/prof_rate.png}
+            \caption{Professor Satisfaction Rate}
+        \end{subfigure}
+        ~
+        \begin{subfigure}{0.32\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../figures/200candidates_15courses_100simulations/scores.png}
+            \caption{Score}
+        \end{subfigure}
+        \caption{Histograms with 200 candidates and 15 courses}
+        \label{fig:200can_15cou}
+    \end{figure*}
+    \begin{figure*}[t]
+        \centering
+        \begin{subfigure}{0.32\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../figures/300candidates_50courses_100simulations/can_rate.png}
+            \caption{Candidate Satisfaction Rate}
+        \end{subfigure}%
+        ~
+        \begin{subfigure}{0.32\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../figures/300candidates_50courses_100simulations/prof_rate.png}
+            \caption{Professor Satisfaction Rate}
+        \end{subfigure}
+        ~
+        \begin{subfigure}{0.32\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../figures/300candidates_50courses_100simulations/scores.png}
+            \caption{Score}
+        \end{subfigure}
+        \caption{Histograms with 300 candidates and 50 courses}
+        \label{fig:500can_40cou}
+    \end{figure*}
+    %------------------------------------------------
     \section{Conclusion}
-    \indent From the output, we could draw our conclusion that our method can build an appropriate TA assignment that satisfies candidates' preferences
-    and Instructors' preferences as much as possible, while all requirements are met.
-
+    It is found from all sample sizes that Maximum Matching Algorithm and Hungarian Algorithm have an exactly like
+    distribution of score values in the Monte Carlo simulation process with trail number $n=100$. In Maximum Matching 
+    Algorithm, the "score" is $s = \lambda_1 p_{ij} + \lambda_2 p_{ji}$ which weights 
+    edges connecting vertices from candidates group to courses group. In Hungarian Algorithm, the "score" is the entries
+    in the cost matrix which we defined as $2 - \text{i's preference to j} - \text{j's preference to i}$. And we were 
+    minimizing the cost. Therefore, they are optimizing the same score function but we implemented the score function 
+    differently to fit the algorithms. So a convincing reason to the phenomena is that both Maximum Matching Algorithm and 
+    Hungarian Algorithm were trying to build their assignments to maximize the same score function. 
+    \\\indent In addtion, comparing the performances for different algorithms under tested sizes of candidates and courses, it could be
+    safe to conclude that both Hungarian Algorithm and Maximum Matching Algorithm performs well in satisfying student candidates'
+    top-3 preferences. And with the current input method (weighting professors' preferences and candidates' preferences equally), it is
+    more likely that Stable Marriage Algorithm will give a best result to satisfy professors' preferneces for any data size. Meanwhile, 
+    as the size of data increases, Hungarian Algorithm and Maximum Matching Algorithm will produce better assignments that also could 
+    meet professors' top-3 preferences with a mean of $100\%$ probability.
+    \\\indent Moreover, with the current input and evaluation method, Hungarian Algorithm and Maximum Matching will both have optimized score
+    with the exact same value. On the other hand, the assignment score computed using Stable Marriage Algorithm is slightly less than the score
+    retrieved from the other two methods but not far below.
+    \\\indent Also, it is necessary to consider the runtime 
+    %------------------------------------------------
     \section{Improvements}
     We are currently only focusing on teaching assistant posistions, but the real world problem includes more various teaching
     positions such as graders and instructors. We would also like to consider various positions for further studies.
     \\ \indent Currently we value course's preference to candidates and candidates' preference to courses equally likely. We will
-    test additional weights of them. This can be achieved by adjusting computation of the cost matrix in Hungarian Algorithm, and
-    changed the direction of proposing in the Stable Marriage Algorithm, and change the value of $\lambda_1$ and $\lambda_2$ in the
-    scoring function. We want to know the real-world implications if different weights are used.
+    test additional weights of them. This can be achieved by
+    \begin{itemize}
+        \item Changing the direction of proposing in Stable Marriage Algorithm
+        \item Adjusting computation of the cost matrix in Hungarian Algorithm
+        \item Changing the $\lambda_1$ and $\lambda_2$ while weighting the edge in Maximum Matching Algorithm
+    \end{itemize}
+    We want to know the real-world implications if different weights are used.
     \\ \indent Another point to improve our method is to find out some other constraints to let our model fit the real world problem more. For example,
-    we could add the constraints considering about the time confliction for candidate's course schedule. 
+    we would like to construct quantification inputs instead of "qualified" or "not-qualified".
+    \\ \indent Besides, if our community partners are willing to take our suggestion by chance, we would modify our input method from
+    randomly generating to construct our data map using given input data such as comma-seperated-value files (.csv) and 
+    SQL or NoSQL tables.
     \\ \indent In such way, I think our model could be more realistic and might be more accpetable to our community partners.
-
+    %------------------------------------------------
     \section{References}
     [1]"The college admission problem: many-to-one matching : Networks II Course blog for INFO 4220", Blogs.cornell.edu, 2018. [Online]. 
     Available: https://blogs.cornell.edu/info4220/2016/03/18/the-college-admission-problem-many-to-one-matching/. \\
